@@ -100,6 +100,41 @@ Back to [Table of Contents](#table-of-contents)
 ## **UX - User Experience Design**
 
 
+### **First time user**
+> *I want to play the game quickly to see if it's worth my time.*
+>
+> *I want to be informed how to play the game, in a simple manner.*
+>
+> *I want the gameplay to be clean, without interruptions.*
+>
+> *I want to select the difficulty of the game.*
+>
+> *I want to see the game result, together with my score.*
+>
+> *I want to know what I did wrong if the game is lost.*
+>
+> *I want to be able to quit the game.*
+
+### **Returning user**
+> *I want to be able to register.*
+>
+> *I want to be able to log in.*
+>
+> *I want my password to be stored securely.*
+>
+> *I want to see my top scores.*
+>
+> *I want to see how many wins, losses and total games I have.*
+>
+> *I want to see how much time I spent playing.*
+>
+> *I want to set the status in case I climb to the main leaderboard.*
+>
+> *I want to see the top scores overall.*
+>
+> *I want to customize the game mode.*
+
+
 Back to [Table of Contents](#table-of-contents)
 
 
