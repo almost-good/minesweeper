@@ -95,6 +95,26 @@ Back to [Table of Contents](#table-of-contents)
 
 
 ## **Developer's Note**
+Minesweeper project is created as a **Portfolio Project** for Code Institute Full Stack Software Developer program.
+The project showcases my skills in Python which I acquired as a Code Institute student.
+
+**Note:** This website is created in educational purposes only, it's main purpose is to help me grasp different Python concepts and grow my skills as a developer.
+
+**Note 2:** This project requirement was to use Code Institute provided template. All template files are included in "Initial commit".<br>List of template files:
+- Controllers folder
+- Views folder
+- index.js
+- package.json
+- Procfile
+- .gitignore entires from the template:
+  - core.Microsoft*
+  - core.mongo*
+  - core.python*
+  - env.py
+  - __ pycache__/
+  - *.py[ cod]
+  - node_modules/
+  - .github/
 
 
 Back to [Table of Contents](#table-of-contents)
