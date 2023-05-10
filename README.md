@@ -265,8 +265,12 @@ Back to [Table of Contents](#table-of-contents)
 
 ## **Technologies Used**
 
-
-Back to [Table of Contents](#table-of-contents)
+### **Tools**
+- [VScode](https://code.visualstudio.com) - IDE.
+- [Git](https://git-scm.com/) - Version control.
+- [GitHub](https://github.com) - Code hosting.
+- [Lucidchart](https://www.lucidchart.com/) - Flowcharts.
+- [Google Sheets](https://www.google.com/sheets/about/) - Database.
 
 
 ## **Deployment**
