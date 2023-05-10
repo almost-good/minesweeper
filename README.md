@@ -1,4 +1,5 @@
 # Minesweeper
+
 **Minesweeper** is a *puzzle-type text-based game* which runs directly in the terminal. The objective is to flag all mines in the shortest amount of time. The player can choose the desired difficulty from the predefined options or customize the game rules directly. The entire app can be accessed as a guest or as a registered user. If the user chooses to register, they will gain access to various gameplay information and be able to change their status.
 
 ## **Table of Contents**
@@ -17,6 +18,7 @@
 
 
 ## **How to Play**
+
 **Minesweeper** is a *single-player puzzle text-based game*. The objective is to *flag all mines* in the shortest amount of time. The fields of the game grid have three different states: **hidden, displayed and flagged**.<br><br>
 A **hidden state** means the field did not receive any action yet. It's free to select for manipulation: *to be displayed or flagged*.<br>
 The **displayed field** shows the number of mines surrounding that specific field. If the player selects and displays the field which indicates there are no mines nearby, *then all adjacent fields will be displayed*, until we get to the indicator that there is a mine nearby in either number or flag format. The displayed field cannot receive any action.<br>
@@ -55,6 +57,7 @@ If the user set all of their flags and did not win the game, it means some of th
   - **flag-keyword, row-value, col-value**
 
 ### **Game Modes**
+
 The player can choose between easy, normal, hard and fun modes.<br>
 All modes except the fun one come with a predefined number of grid rows, columns and mines.
 
@@ -101,6 +104,7 @@ Back to [Table of Contents](#table-of-contents)
 
 
 ### **First time user**
+
 > *I want to play the game quickly to see if it's worth my time.*
 >
 > *I want to be informed how to play the game, in a simple manner.*
@@ -116,6 +120,7 @@ Back to [Table of Contents](#table-of-contents)
 > *I want to be able to quit the game.*
 
 ### **Returning user**
+
 > *I want to be able to register.*
 >
 > *I want to be able to log in.*
@@ -140,6 +145,66 @@ Back to [Table of Contents](#table-of-contents)
 
 ## **Logic**
 
+The real-life application is moulded according to the created flowcharts. 
+The flowcharts depict the flow of the app but also allow for an insight into the logic behind.
+
+### **Flow of the app**
+
+Displays the flow of the app as a whole, from start until the point the app is exited.
+The flowchart serves as a general guideline on how the app is constructed, structured and what it will include.
+
+<br>
+<details>
+<summary>Flowchart</summary>
+
+![Flowchart](./assets/docs/flowchart/flow-app.png)
+</details>
+<br>
+
+### **Flow of the game**
+
+Displays the flow of the game. The flow starts from the **"play game"** selection, goes over difficulty modes, the game, it's results and finally to the game menu itself. 
+The flowchart will help with visualising how the gameplay should look, mainly from the player's point of view.
+
+<br>
+<details>
+<summary>Flowchart</summary>
+
+![Flowchart](./assets/docs/flowchart/flow-game.png)
+</details>
+<br>
+
+### **Additional flows**
+
+Additional flows are flows of special commands and functions.
+
+**Input validation** is a function that appears on numerous occasions. It's one of the most important functions as it ensures the values taken from the user are, in fact valid. Validation was taken out of the main flow, to ensure the flowchart's tidiness and readability.<br>
+
+**Menu, Exit and Help commands** are global commands of the app. They can be accessed from almost every part of the app, even if the input was intended for a different purpose.
+- **Menu** jumps instantly to the main menu, even if mid-game.
+- **Exit** exits the app completely.
+- **Help** displays the commands for that specific part of the program. 
+  - *The reason behind the help is:* The commands are initially shown at the top of the screen, but as the user interacts with the page, commands are pushed further away. The user can forget how to properly enter commands and if they do, they can simply enter **"help"** and commands will be reprinted.
+
+<br>
+<details>
+<summary>Flowchart</summary>
+
+![Flowchart](./assets/docs/flowchart/flow-helper.png)
+</details>
+<br>
+
+### **Logic of the game**
+
+The logic of the game includes insight into how the game functions behind the scenes.
+
+<br>
+<details>
+<summary>Flowchart</summary>
+
+![Flowchart](./assets/docs/flowchart/flow-app.png)
+</details>
+<br>
 
 Back to [Table of Contents](#table-of-contents)
 
