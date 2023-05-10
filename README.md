@@ -211,6 +211,36 @@ Back to [Table of Contents](#table-of-contents)
 
 ## **Data Model**
 
+The [Google Sheet](https://www.google.com/sheets/about/) is used as the Minesweeper app database. The database consists of four sheets, each represented by its unique ID.
+
+### **User data**
+
+User data stores the account and security information of the individual user.
+<br>
+
+![User Data](./assets/docs/database/db-user.jpg)
+
+### **User info data**
+
+User info data stores game data relevant to the account. 
+<br>
+
+![User info Data](./assets/docs/database/db-user-info.jpg)
+
+### **Player leaderboard data**
+
+Player leaderboard data stores a list of the top 5 high scores in each game mode for every user.
+<br>
+
+![Player Leaderboard Data](./assets/docs/database/db-player-leaderboard.jpg)
+
+### **Game leaderboard data**
+
+Game leaderboard data stores the top 10 high scores in each game mode. Leaderboard information is shared between different users.
+<br>
+
+![Game Leaderboard Data](./assets/docs/database/db-game-leaderboard.jpg)
+
 
 Back to [Table of Contents](#table-of-contents)
 
