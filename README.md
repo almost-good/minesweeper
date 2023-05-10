@@ -157,7 +157,7 @@ The flowchart serves as a general guideline on how the app is constructed, struc
 <details>
 <summary>Flowchart</summary>
 
-![Flowchart](./assets/docs/flowchart/logic-game.png)
+![Flowchart](./assets/docs/flowchart/flow-app.png)
 </details>
 <br>
 
@@ -202,7 +202,7 @@ The logic of the game includes insight into how the game functions behind the sc
 <details>
 <summary>Flowchart</summary>
 
-![Flowchart](./assets/docs/flowchart/flow-app.png)
+![Flowchart](./assets/docs/flowchart/logic-game.png)
 </details>
 <br>
 
