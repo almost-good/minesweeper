@@ -2,6 +2,10 @@
 
 **Minesweeper** is a *puzzle-type text-based game* which runs directly in the terminal. The objective is to flag all mines in the shortest amount of time. The player can choose the desired difficulty from the predefined options or customize the game rules directly. The entire app can be accessed as a guest or as a registered user. If the user chooses to register, they will gain access to various gameplay information and be able to change their status.
 
+Deployed site can be accesed: [HERE](https://minesweeper-app.herokuapp.com).
+
+<br>
+
 ## **Table of Contents**
 
 - [Developer's Note](#developers-note)
@@ -58,7 +62,7 @@ If the user set all of their flags and did not win the game, it means some of th
 
 ### **Game Modes**
 
-The player can choose between easy, normal, hard and fun modes.<br>
+The player can choose between easy, normal, hard and practice modes.<br>
 All modes except the fun one come with a predefined number of grid rows, columns and mines.
 
 #### **Easy mode**
@@ -82,19 +86,34 @@ All modes except the fun one come with a predefined number of grid rows, columns
   >
   > *Num of mines:*
 
-#### **Fun mode**
-- Fun mode allows players to customize the game. The player can select a number of rows, columns and mines they wish to play with, but is at the same time restricted with minimum and maximum values they can select.
+#### **Practice mode**
+- Practice mode allows players to customize the game. The player can select a number of rows, columns and mines they wish to play with, but is at the same time restricted with minimum and maximum values they can select. Practice mode is not scored.
   > *Num of rows:*
   >
   > *Num of cols:*
   >
   > *Num of mines:*
 
+**Commands**
+- Commands are following the same structure for every option.
+- Correct:
+    > *Practice*
+    >
+    > *practice*
+    >
+    > *PraCtiCE*
+- Incorrect:
+    > *pra ctice*
+    >
+    > *md practice*
+
+<br>
 
 Back to [Table of Contents](#table-of-contents)
 
 
 ## **Developer's Note**
+
 Minesweeper project is created as a **Portfolio Project** for Code Institute Full Stack Software Developer program.
 The project showcases my skills in Python which I acquired as a Code Institute student.
 
@@ -116,6 +135,7 @@ The project showcases my skills in Python which I acquired as a Code Institute s
   - node_modules/
   - .github/
 
+<br>
 
 Back to [Table of Contents](#table-of-contents)
 
@@ -159,6 +179,7 @@ Back to [Table of Contents](#table-of-contents)
 >
 > *I want to customize the game mode.*
 
+<br>
 
 Back to [Table of Contents](#table-of-contents)
 
@@ -169,7 +190,6 @@ The real-life application is moulded according to the created flowcharts.
 The flowcharts depict the flow of the app but also allow for an insight into the logic behind.
 
 ### **Flow of the app**
-
 Displays the flow of the app as a whole, from start until the point the app is exited.
 The flowchart serves as a general guideline on how the app is constructed, structured and what it will include.
 
@@ -182,7 +202,6 @@ The flowchart serves as a general guideline on how the app is constructed, struc
 <br>
 
 ### **Flow of the game**
-
 Displays the flow of the game. The flow starts from the **"play game"** selection, goes over difficulty modes, the game, it's results and finally to the game menu itself. 
 The flowchart will help with visualising how the gameplay should look, mainly from the player's point of view.
 
@@ -195,7 +214,6 @@ The flowchart will help with visualising how the gameplay should look, mainly fr
 <br>
 
 ### **Additional flows**
-
 Additional flows are flows of special commands and functions.
 
 **Input validation** is a function that appears on numerous occasions. It's one of the most important functions as it ensures the values taken from the user are, in fact valid. Validation was taken out of the main flow, to ensure the flowchart's tidiness and readability.<br>
@@ -215,7 +233,6 @@ Additional flows are flows of special commands and functions.
 <br>
 
 ### **Logic of the game**
-
 The logic of the game includes insight into how the game functions behind the scenes.
 
 <br>
