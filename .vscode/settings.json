@@ -2,7 +2,7 @@
    "python.linting.pylintEnabled": true,
    "python.linting.enabled": true,
    "python.linting.pycodestyleEnabled": false,
-   "python.linting.flake8Enabled": true,
+   "python.linting.flake8Enabled": false,
    "python.terminal.activateEnvironment": false,
    "files.exclude": {
       "**/.DS_Store": true,

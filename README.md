@@ -295,6 +295,29 @@ Back to [Table of Contents](#table-of-contents)
 
 ## **Deployment**
 
+### **Deployment to Heroku**
+1. Create **requirements.txt**
+    - pip3 freeze > requirements.txt
+2. Log into the Heroku account.
+3. Click **"new"** and then **"Create new app"**.
+4. Pick a unique name for the app, select the region and click **"Create app"**.
+5. Once you have landed on a new page select the **"Settings"** tab and scroll down to **"Config Vars"** and click **"Reveal Config Vars"**.
+    - The purpose of config vars, or environment variables is to store sensitive data that needs to be kept secret.
+    - Heroku needs to access the CREDS.json file, which stores API credentials. CREDS content is important and sensitive, so it needs to be hidden. We achieve hiding by listing CREDS.json in .gitignore.
+6. Enter **"CREDS"** in the **"KEY"** field. Copy CREDS.json contents and paste them into Heroku **"VALUE"** field. Click **"Add"**.
+7. Enter **"PORT"** in the **"KEY"** field. Enter **"8000"** in the **"VALUE"** field.
+8. Scroll down to the **"Buildpacks"** section, and click **"Add buildpack"**.
+    - Select **"Python"** and click **"Save changes"**.
+    - Select **"nodejs"** and click **"Save changes"**.
+      - **"nodejs"** build pack is needed to handle mock terminal code.
+9. Scroll back up and select the **"Deploy"** tab.
+10. Move a bit down and there will be **"Deployment method"**: pick **"GitHub"**.
+11. Next to the **"Connect to GitHub"** section: enter the name of the GitHub repository and click **"Search"**.
+12. After the correct repository is located: select **"Connect"**.
+    - This will link up Heroku with the GitHub repository code.
+13. Scroll down to the **"Automatic and manual deploy"** section. Select the preffered option.
+14. Scroll back up and select **"Open app"** to view the app.
+
 
 Back to [Table of Contents](#table-of-contents)
 
