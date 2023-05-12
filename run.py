@@ -1,25 +1,10 @@
-import gspread
-from google.oauth2.service_account import Credentials
-
+import database
 
 def main():
-    # Set up database
-    SCOPE = [
-        "https://www.googleapis.com/auth/spreadsheets",
-        "https://www.googleapis.com/auth/drive.file",
-        "https://www.googleapis.com/auth/drive"
-    ]
-
-    CREDS = Credentials.from_service_account_file('creds.json')
-    SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-    GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-    SHEET = GSPREAD_CLIENT.open('minesweeper-db')
-
-    username = SHEET.worksheet('user')
-
-    data = username.get_all_values()
-
-    print(data)
+    """
+    Starts the program.
+    """
+    print(database.call_db())
 
 
 if __name__ == "__main__":

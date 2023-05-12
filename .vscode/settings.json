@@ -18,4 +18,13 @@
       "**/CVS": true
    },
    "files.autoSave": "afterDelay",
+   "python.languageServer": "Pylance",
+   "editor.defaultFormatter": null,
+   "editor.formatOnSave": false,
+   "[python]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "ms-python.black-formatter"
+   },
+   "python.formatting.provider": "black",
+   "python.formatting.blackPath": "/usr/local/bin/black"
 }
