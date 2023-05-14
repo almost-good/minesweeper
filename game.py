@@ -67,7 +67,9 @@ class _Board:
         Displays the board on the screen.
         """
 
+        self._display_col_indicators(self.cols)
         for row in range(self.rows):
+            self._display_row_indicators(row)
 
             for col in range(self.cols):
                 # Prints the value of the board field.
@@ -81,6 +83,34 @@ class _Board:
         """
         self.board = [[self.value for _ in range(self.cols)]
                       for _ in range(self.rows)]
+
+    def _display_col_indicators(self, col):
+        """
+        Displays column indicators on top of the board.
+
+        :param cols: Board column count.
+        :type cols: int
+        """
+
+        print('   ', end='  ')
+        for i in range(1, col+1):
+            print(i, end='  ')
+
+        print('\n  ', end='  ')
+        for i in range(col):
+            print('_', end='__')
+
+        print()
+
+    def _display_row_indicators(self, row):
+        """
+        Displays row indicator to the left side of the board.
+
+        :param row: Current board row.
+        :type row: int
+        """
+
+        print(row+1, end='  | ')
 
 
 game = Minesweeper(6, 5, 5)
