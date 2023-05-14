@@ -52,7 +52,6 @@ class Board:
 
         self.rows = rows
         self.cols = cols
-        self.value = HIDDEN  # Value of one field.
         self.board = []
 
         self._create_board()
@@ -74,9 +73,9 @@ class Board:
 
     def _create_board(self):
         """
-        Constructs the board using self.value for every field.
+        Constructs the board using const HIDDEN for every field.
         """
-        self.board = [[self.value for _ in range(self.cols)]
+        self.board = [[HIDDEN for _ in range(self.cols)]
                       for _ in range(self.rows)]
 
     def _display_col_indicators(self, col):
