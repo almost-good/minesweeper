@@ -16,7 +16,12 @@ Values required in order to use the board:
     - Cols - represent number of columns the board grid has.
     - Mines - represent number of mines present on board.
 
-The script requires built in utility "random" for generation of random numbers.
+The script requires:
+    - built in utility "random" for generation of random numbers,
+    - consts from consts module:
+        (HIDDEN, str, const), (MINE, str, const)
+        - HIDDEN - represents hidden value of the field.
+        - MINE - represents mine value of the field.
 
 The file contains following classes:
     - Board
@@ -24,6 +29,7 @@ The file contains following classes:
 """
 
 import random
+from modules.game.consts import HIDDEN, MINE
 
 
 class Board:
@@ -46,7 +52,7 @@ class Board:
 
         self.rows = rows
         self.cols = cols
-        self.value = '-'  # Value of one field.
+        self.value = HIDDEN  # Value of one field.
         self.board = []
 
         self._create_board()
@@ -138,8 +144,8 @@ class GameBoard(Board):
             row = field // self.cols
             col = field % self.cols
 
-            if self.board[row][col] == '*':
+            if self.board[row][col] == MINE:
                 continue
 
-            self.board[row][col] = '*'
+            self.board[row][col] = MINE
             mine_count += 1
