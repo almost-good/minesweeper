@@ -13,12 +13,15 @@ Values required in order to play the game:
     - Cols - represent number of columns the board grid has.
     - Mines - represent number of mines present on board.
 
-The script depends on "board" module from the same directory.
+The script requires:
+    - built in utility "time" for elapsed time measurement,
+    - "board" module from the same directory, and it's classes.
 
 The file contains following classes:
     - Minesweeper
 """
 
+import time
 from modules.game import board
 
 
@@ -45,6 +48,7 @@ class Minesweeper:
         self.rows = rows
         self.cols = cols
         self.mines = mines
+        self.flags = mines
 
         # Create game and player board objects.
         self.gm_board = board.GameBoard(self.rows, self.cols, self.mines)
@@ -60,18 +64,39 @@ class Minesweeper:
         self.gm_board.display()
         self.pl_board.display()
 
+        # Time tracker.
+        game_timer = time.time()
+
         while True:
+            # Game footer.
+            self._display_game_footer(game_timer)
+
             # Player field choice.
-            field = input("Select a field: ")
+            field = input("\nSelect a field: ")
             field = field.split(',')
-            
+
             self.pl_board.set_field(int(field[0]), int(field[1]))
-            
+
             # Check if the game is over.
             if self._game_over(int(field[0]), int(field[1])):
                 break
 
             self.pl_board.display()
+
+    def _display_game_footer(self, timer_start):
+        """
+        Displays game footer.
+        Game footer contains information:
+            - Number of MINES on the board.
+            - Number of remaining FLAGS.
+            - Time elapsed from beginning of the game.
+
+        :param timer_start: Number representing the time when the game started.
+        :type timer_start: Time object.
+        """
+
+        timer = round(time.time() - timer_start)
+        print(f"\nMINES: {self.mines}\tFLAGS: {self.flags}\tTIMER: {timer}s")
 
     def _game_over(self, row, col):
         """
