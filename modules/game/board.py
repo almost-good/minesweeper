@@ -1,47 +1,34 @@
+"""
+Board.
+
+Board module represents Minesweeper board and is in charge of
+board functionalities.
+
+Board functionalities include:
+    - creation of the board,
+    - creation of board fields,
+    - manipulation of field values,
+    - displaying the board.
+
+Values required in order to use the board:
+    (rows, int), (cols, int), (mines, int).
+    - Rows - represent number of rows the board grid has.
+    - Cols - represent number of columns the board grid has.
+    - Mines - represent number of mines present on board.
+
+The script requires built in utility "random" for generation of random numbers.
+
+The file contains following classes:
+    - Board
+    - GameBoard(Board)
+"""
+
 import random
 
 
-class Minesweeper:
+class Board:
     """
-    Minesweeper class used to create and execute game object.
-
-    Public methods:
-        run()
-    """
-
-    def __init__(self, rows, cols, mines):
-        """
-        Constructor method.
-
-        :param rows: Number of Minesweeper grid rows.
-        :type rows: int
-        :param cols: Number of Minesweeper grid columns.
-        :type cols: int
-        :param mines: Number of Minesweeper mines in the grid.
-        :type mines: int
-        """
-
-        self.rows = rows
-        self.cols = cols
-        self.mines = mines
-
-    def run(self):
-        """
-        Runs the Minesweeper game.
-        """
-
-        # Create game and player board objects.
-        game_board = _GameBoard(self.rows, self.cols, self.mines)
-        player_board = _Board(self.rows, self.cols)
-
-        game_board.display()
-        player_board.display()
-
-
-class _Board:
-    """
-    Private Board class available for use only inside __ module.
-    Creates and structures board object.
+    Board class with purpose of creating and structuring board objects.
 
     Public methods:
         display()
@@ -115,10 +102,9 @@ class _Board:
         print(row+1, end='  | ')
 
 
-class _GameBoard(_Board):
+class GameBoard(Board):
     """
-    Private GameBoard class only available for use in __ module.
-    Inherits from the private Board class, it is a Board object
+    GameBoard class which inherits the Board class, it is a Board object
     of the GameBoard type.
     Adds additional functionality specific to GameBoard.
     """
@@ -157,7 +143,3 @@ class _GameBoard(_Board):
 
             self.board[row][col] = '*'
             mine_count += 1
-
-
-game = Minesweeper(6, 5, 5)
-game.run()

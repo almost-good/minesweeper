@@ -23,8 +23,9 @@
    "editor.formatOnSave": false,
    "[python]": {
       "editor.formatOnSave": true,
-      "editor.defaultFormatter": "ms-python.black-formatter"
+      "editor.defaultFormatter": "ms-python.python"
    },
    "python.formatting.provider": "black",
-   "python.formatting.blackPath": "/usr/local/bin/black"
+   "python.formatting.blackPath": "/usr/local/bin/black",
+   "autoDocstring.docstringFormat": "sphinx"
 }
