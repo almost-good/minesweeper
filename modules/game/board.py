@@ -22,6 +22,9 @@ The script requires:
         (HIDDEN, str, const), (MINE, str, const)
         - HIDDEN - represents hidden value of the field.
         - MINE - represents mine value of the field.
+        - EMPTY - represents empty value of the field.
+            Meaning there are no mines nearby to the field.
+        - OFFSETS - formula for getting adjacent fields.
 
 The file contains following classes:
     - Board
@@ -29,7 +32,7 @@ The file contains following classes:
 """
 
 import random
-from modules.game.consts import HIDDEN, MINE
+from modules.game.consts import HIDDEN, MINE, EMPTY, OFFSETS
 
 
 class Board:
@@ -130,6 +133,7 @@ class GameBoard(Board):
         super().__init__(rows, cols)
 
         self._place_mines()
+        self._place_values()
 
     def _place_mines(self):
         """
@@ -148,3 +152,48 @@ class GameBoard(Board):
 
             self.board[row][col] = MINE
             mine_count += 1
+
+    def _place_values(self):
+        """
+        Places values on the game board.
+        The values indicate the number of nearby mines.
+        """
+
+        for row in range(self.rows):
+            for col in range(self.cols):
+                # If field value is not MINE assign a value.
+                if self.board[row][col] == MINE:
+                    continue
+
+                self.board[row][col] = self._get_value(row, col)
+
+    def _get_value(self, row, col):
+        """
+        Calculates the number of nearby mines to the current field.
+
+        :param row: Current field row of the grid.
+        :type row: int
+        :param col: Current field column of the grid
+        :type col: int
+        :return: Number of nearby mines to the current field.
+        :rtype: int
+        """
+
+        count = 0
+
+        # Check each field around current board field.
+        for offset in OFFSETS:
+            offset_row = offset[0] + row
+            offset_col = offset[1] + col
+
+            # Make sure the field is inside of the board.
+            if (offset_row in range(0, self.rows)) and \
+                    (offset_col in range(0, self.cols)):
+                # Make sure the field is mine.
+                if self.board[offset_row][offset_col] == MINE:
+                    count += 1
+
+        if count == 0:
+            return EMPTY
+
+        return count

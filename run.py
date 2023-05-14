@@ -7,7 +7,7 @@ def main():
     Starts the program.
     """
     print(database.call_db())
-    game = Minesweeper(6, 5, 5)
+    game = Minesweeper(9, 10, 5)
     game.run()
 
 

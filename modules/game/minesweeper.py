@@ -19,7 +19,7 @@ The file contains following classes:
     - Minesweeper
 """
 
-import modules.game.board as board
+from modules.game import board
 
 
 class Minesweeper:
