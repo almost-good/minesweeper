@@ -12,7 +12,7 @@ Constants list:
 """
 
 # Board field values.
-HIDDEN = '-'
+HIDDEN = 'x'
 MINE = '*'
 EMPTY = '.'
 

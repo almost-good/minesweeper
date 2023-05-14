@@ -20,7 +20,7 @@ The file contains following classes:
 """
 
 from modules.game import board
-from modules.game.consts import MINE
+from modules.game.consts import MINE, EMPTY, HIDDEN, OFFSETS
 
 
 class Minesweeper:
@@ -69,12 +69,33 @@ class Minesweeper:
             if self._is_mine(int(field[0]), int(field[1])):
                 break
 
-            self._display_field(int(field[0]), int(field[1]))
-
-    def _display_field(self, row, col):
-        self.pl_board.board[row][col] = self.gm_board.board[row][col]
+            self._get_field(int(field[0]), int(field[1]))
 
     def _is_mine(self, row, col):
         if self.gm_board.board[row][col] == MINE:
             print("GAME OVER")
             return True
+
+    def _get_field(self, row, col):
+        self.pl_board.board[row][col] = self.gm_board.board[row][col]
+        if self.pl_board.board[row][col] == EMPTY:
+            self._get_connected_fields(row, col)
+
+    def _get_connected_fields(self, row, col):
+        fields = [(row, col)]
+
+        while len(fields) > 0:
+            field = fields.pop()
+            for offset in OFFSETS:
+                row = offset[0] + field[0]
+                col = offset[1] + field[1]
+
+                if (row in range(0, self.rows)) and (col in range(0, self.cols)):
+                    if (self.pl_board.board[row][col] == HIDDEN) and \
+                            (self.gm_board.board[row][col] != MINE):
+                        self.pl_board.board[row][col] = \
+                                self.gm_board.board[row][col]
+
+                        if self.pl_board.board[row][col] == EMPTY and \
+                                (row, col) not in fields:
+                            fields.append((row, col))
