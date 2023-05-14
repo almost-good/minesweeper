@@ -226,6 +226,7 @@ class PlayerBoard(Board):
 
     Public methods:
         set_field()
+        num_of_hidden_remaining()
     """
 
     def __init__(self, rows, cols, gm_board):
@@ -260,6 +261,21 @@ class PlayerBoard(Board):
         # If the field is empty, check other fields.
         if self.board[row][col] == EMPTY:
             self._set_connected_fields(row, col)
+
+    def num_of_hidden_fields(self):
+        """
+        Checks how many fields are HIDDEN on board.
+
+        :return: Number of HIDDEN fields on board.
+        :rtype: int
+        """
+
+        count = 0
+
+        for row in self.board:
+            count += row.count(HIDDEN)
+
+        return count
 
     def _set_connected_fields(self, row, col):
         """

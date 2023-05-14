@@ -58,17 +58,29 @@ class Minesweeper:
         """
 
         self.gm_board.display()
+        self.pl_board.display()
 
         while True:
-            self.pl_board.display()
-
             # Player field choice.
             field = input("Select a field: ")
             field = field.split(',')
 
-            # Check if field is MINE.
-            if self.gm_board.is_mine(int(field[0]), int(field[1])):
-                print("GAME OVER")
+            # Check if the game is over.
+            if self._game_over(int(field[0]), int(field[1])):
                 break
 
             self.pl_board.set_field(int(field[0]), int(field[1]))
+
+            self.pl_board.display()
+
+    def _game_over(self, row, col):
+        # If the selected field is mine game is lost.
+        if self.gm_board.is_mine(row, col):
+            self._game_lose()
+            return True
+
+        hidden_count = self.pl_board.num_of_hidden_fields()
+        print(hidden_count)
+
+    def _game_lose(self):
+        print("GAME OVER")
