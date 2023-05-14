@@ -31,8 +31,10 @@ class Minesweeper:
         """
 
         # Create game and player board objects.
+        game_board = _GameBoard(self.rows, self.cols, self.mines)
         player_board = _Board(self.rows, self.cols)
 
+        game_board.display()
         player_board.display()
 
 
@@ -111,6 +113,50 @@ class _Board:
         """
 
         print(row+1, end='  | ')
+
+
+class _GameBoard(_Board):
+    """
+    Private GameBoard class only available for use in __ module.
+    Inherits from the private Board class, it is a Board object
+    of the GameBoard type.
+    Adds additional functionality specific to GameBoard.
+    """
+
+    def __init__(self, rows, cols, mines):
+        """
+        Constructor method.
+
+        :param rows: Number of Board grid rows.
+        :type rows: int
+        :param cols: Number of Board grid columns.
+        :type cols: int
+        :param mines: Number of Minesweeper mines on the board.
+        :type mines: int
+        """
+
+        self.mines = mines
+        super().__init__(rows, cols)
+
+        self._place_mines()
+
+    def _place_mines(self):
+        """
+        Places mines on the game board.
+        """
+
+        mine_count = 1
+        while mine_count <= self.mines:
+            # 0 <= field <= (rows x cols)
+            field = random.randint(0, (self.rows * self.cols)-1)
+            row = field // self.cols
+            col = field % self.cols
+
+            if self.board[row][col] == '*':
+                continue
+
+            self.board[row][col] = '*'
+            mine_count += 1
 
 
 game = Minesweeper(6, 5, 5)
