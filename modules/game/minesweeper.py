@@ -20,6 +20,7 @@ The file contains following classes:
 """
 
 from modules.game import board
+from modules.game.consts import MINE
 
 
 class Minesweeper:
@@ -46,14 +47,34 @@ class Minesweeper:
         self.cols = cols
         self.mines = mines
 
+        # Create game and player board objects.
+        self.gm_board = board.GameBoard(self.rows, self.cols, self.mines)
+        self.pl_board = board.Board(self.rows, self.cols)
+
     def run(self):
         """
         Runs the Minesweeper game.
         """
 
-        # Create game and player board objects.
-        game_board = board.GameBoard(self.rows, self.cols, self.mines)
-        player_board = board.Board(self.rows, self.cols)
+        self.gm_board.display()
 
-        game_board.display()
-        player_board.display()
+        while True:
+            self.pl_board.display()
+
+            # Player field choice.
+            field = input("Select a field: ")
+            field = field.split(',')
+
+            # Check if field is MINE.
+            if self._is_mine(int(field[0]), int(field[1])):
+                break
+
+            self._display_field(int(field[0]), int(field[1]))
+
+    def _display_field(self, row, col):
+        self.pl_board.board[row][col] = self.gm_board.board[row][col]
+
+    def _is_mine(self, row, col):
+        if self.gm_board.board[row][col] == MINE:
+            print("GAME OVER")
+            return True
