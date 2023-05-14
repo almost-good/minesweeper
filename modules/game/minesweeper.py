@@ -64,23 +64,52 @@ class Minesweeper:
             # Player field choice.
             field = input("Select a field: ")
             field = field.split(',')
-
+            
+            self.pl_board.set_field(int(field[0]), int(field[1]))
+            
             # Check if the game is over.
             if self._game_over(int(field[0]), int(field[1])):
                 break
 
-            self.pl_board.set_field(int(field[0]), int(field[1]))
-
             self.pl_board.display()
 
     def _game_over(self, row, col):
+        """
+        Checks if the game is over, and if it's
+        victory or defeat.
+
+        :param row: Current field row of the grid.
+        :type row: int
+        :param col: Current field column of the grid.
+        :type col: int
+        :return: True if the game is over, False otherwise.
+        :rtype: bool
+        """
+
         # If the selected field is mine game is lost.
         if self.gm_board.is_mine(row, col):
             self._game_lose()
             return True
 
         hidden_count = self.pl_board.num_of_hidden_fields()
-        print(hidden_count)
+        # If number of remaining fields is equal
+        # to number of bombs, the game is won.
+        if hidden_count == self.mines:
+            self._game_win()
+            return True
+
+        return False
 
     def _game_lose(self):
-        print("GAME OVER")
+        """
+        Displays that the game is lost.
+        """
+
+        print("GAME LOST")
+
+    def _game_win(self):
+        """
+        Displays that the game is won.
+        """
+
+        print("GAME WIN")
