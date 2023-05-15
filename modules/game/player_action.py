@@ -15,9 +15,14 @@ Values required in order to use the PlayerAction:
     - Rows - represent number of rows the board grid has.
     - Cols - represent number of columns the board grid has.
 
+The script requires:
+    - built in utility "re" for splitting the input using multiple separators,
+
 The file contains following classes:
     - PlayerAction
 """
+
+import re
 
 
 class PlayerAction:
@@ -55,7 +60,7 @@ class PlayerAction:
 
         try:
             pl_action = input("Display or mark the field:  \n")
-            pl_action = pl_action.split(',')
+            pl_action = re.split(r',| ', pl_action)
 
             formatted_action = self._format_action(pl_action)
 
@@ -88,7 +93,7 @@ class PlayerAction:
                 }
             case 3:
                 return {
-                    "action": action[0],
+                    "action": action[0].lower().strip(),
                     "row": int(action[1])-1,
                     "col": int(action[2])-1
                 }
