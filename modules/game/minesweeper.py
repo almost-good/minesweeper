@@ -15,14 +15,19 @@ Values required in order to play the game:
 
 The script requires:
     - built in utility "time" for elapsed time measurement,
-    - "board" module from the same directory, and it's classes.
+    - "board" module from the same directory, and it's classes:
+        - GameBoard,
+        - PlayerBoard,
+    - "player_action" module from the same directory, and it's class:
+        - PlayerAction.
 
 The file contains following classes:
     - Minesweeper
 """
 
 import time
-from modules.game import board
+from modules.game.board import GameBoard, PlayerBoard
+from modules.game.player_action import PlayerAction
 
 
 class Minesweeper:
@@ -51,10 +56,13 @@ class Minesweeper:
         self.flags = mines
 
         # Create game and player board objects.
-        self.gm_board = board.GameBoard(self.rows, self.cols, self.mines)
-        self.pl_board = board.PlayerBoard(
+        self.gm_board = GameBoard(self.rows, self.cols, self.mines)
+        self.pl_board = PlayerBoard(
             self.rows, self.cols, self.gm_board.board
             )
+
+        # Player action object.
+        self.pl_action = PlayerAction(self.rows, self.cols)
 
     def run(self):
         """
@@ -72,13 +80,12 @@ class Minesweeper:
             self._display_game_footer(game_timer)
 
             # Player field choice.
-            field = input("\nSelect a field: ")
-            field = field.split(',')
+            action = self.pl_action.new_action()
 
-            self.pl_board.set_field(int(field[0]), int(field[1]))
+            self.pl_board.set_field(action["row"], action["col"])
 
             # Check if the game is over.
-            if self._game_over(int(field[0]), int(field[1])):
+            if self._game_over(action["row"], action["col"]):
                 break
 
             self.pl_board.display()
@@ -96,7 +103,7 @@ class Minesweeper:
         """
 
         timer = round(time.time() - timer_start)
-        print(f"\nMINES: {self.mines}\tFLAGS: {self.flags}\tTIMER: {timer}s")
+        print(f"\nMINES: {self.mines}\tFLAGS: {self.flags}\tTIMER: {timer}s\n")
 
     def _game_over(self, row, col):
         """
