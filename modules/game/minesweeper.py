@@ -65,23 +65,28 @@ class Minesweeper:
 
         self.gm_board.display()
         self.pl_board.display()
-
+        
         # Time tracker.
         game_timer = time.time()
+        self._display_game_footer(game_timer)
 
         while True:
-            # Game footer.
-            self._display_game_footer(game_timer)
+            # Player action.
+            action_type, action_row, action_col = self.pl_action.new_action()
 
-            # Player field choice.
-            action = self.pl_action.new_action()
-            self.pl_board.set_field(action.get("row"), action.get("col"))
+            # Check if the field is visible, if not proceed.
+            if self.pl_board.field_visible(action_row, action_col):
+                self._field_visible_warning(action_row, action_col)
+                continue
+
+            self.pl_board.set_field(action_row, action_col)
 
             # Check if the game is over.
-            if self._game_over(action.get("row"), action.get("col")):
+            if self._game_over(action_row, action_col):
                 break
 
             self.pl_board.display()
+            self._display_game_footer(game_timer)
 
     def _display_game_footer(self, timer_start):
         """
@@ -97,6 +102,22 @@ class Minesweeper:
 
         timer = round(time.time() - timer_start)
         print(f"\nMINES: {self.mines}\tFLAGS: {self.flags}\tTIMER: {timer}s\n")
+
+    def _field_visible_warning(self, row, col):
+        """
+        Displays field already visible warning.
+
+        :param row: Selected player board field row.
+        :type row: int
+        :param col: Selected player board field column.
+        :type col: int
+        """
+
+        print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print(f"\n{row+1} {col+1} field is not hidden!"
+              "\nThis field cannot take further actions."
+              "\nPick another!\n")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
     def _game_over(self, row, col):
         """

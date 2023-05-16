@@ -52,7 +52,8 @@ class PlayerActionError():
             "range": "The values are out of range!"
         }
 
-        print("\n\nOh no!", end=" ")
+        print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("\nOh no!", end=" ")
 
         for err in errs:
             print(self.errors[err])
@@ -83,14 +84,13 @@ class PlayerActionError():
         General error text which is printed with every PlayerActionError.
         """
 
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        print("Expected: \n")
-        print("--> For DISPLAYING the field enter 2 digital values only!")
-        print("------> row, col | 2, 3 | 2 3\n")
-        print("--> For FLAGGING the field enter \"flag\" "
+        print("\n\nExpected: \n")
+        print("> For DISPLAYING the field enter 2 digital values only!")
+        print(">>> row, col | 2, 3 | 2 3\n")
+        print("> For FLAGGING the field enter \"flag\" "
               "followed by 2 digital values!")
-        print("------> flag, row, col | flag, 2, 3 | FlAg 2 3\n")
-        print(f"--> ROW should be between: 0 - {self.rows}")
-        print(f"--> COLUMN should be between: 0 - {self.cols}")
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        print("Try again!\n\n")
+        print(">>> flag, row, col | flag, 2, 3 | FlAg 2 3\n")
+        print(f"> ROW should be between: 0 - {self.rows}")
+        print(f"> COLUMN should be between: 0 - {self.cols}")
+        print("\nTry again!\n")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")

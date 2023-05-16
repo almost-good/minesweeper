@@ -57,7 +57,7 @@ class PlayerAction():
             - action key contains player action (display or flag)
             - row key contains selected row
             - col key contains selected column.
-        :rtype: dict
+        :rtype: set
         """
 
         while True:
@@ -73,7 +73,9 @@ class PlayerAction():
 
             self.err.display(self.errs, len(pl_action))
 
-        return formatted_action
+        return (formatted_action.get("action"),
+                formatted_action.get("row"),
+                formatted_action.get("col"))
 
     def _format(self, pl_action):
         """

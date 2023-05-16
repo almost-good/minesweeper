@@ -239,6 +239,22 @@ class PlayerBoard(Board):
         super().__init__(rows, cols)
         self.gm_board = gm_board
 
+    def field_visible(self, row, col):
+        """
+        Checks if the field is already visible.
+
+        :param row: Selected board field row.
+        :type row: int
+        :param col: Selected board field column.
+        :type col: int
+        :return: If the field is visible True, False otherwise.
+        :rtype: bool
+        """
+
+        if self.board[row][col] == HIDDEN:
+            return False
+        return True
+
     def set_field(self, row, col):
         """
         Set the field value to the game grid field value.
@@ -273,7 +289,7 @@ class PlayerBoard(Board):
 
     def _set_connected_fields(self, row, col):
         """
-        Set the connected fields value, until all
+        Set action on the connected fields value, until all
         connected EMPTY field values are set.
 
         :param row: Current field row of the grid.
