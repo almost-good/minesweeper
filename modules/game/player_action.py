@@ -10,25 +10,22 @@ Player action functionalities include:
     - validating,
     - handling the errors.
 
-Values required in order to use the PlayerAction:
-    (rows, int), (cols, int).
-    - Rows - represent number of rows the board grid has.
-    - Cols - represent number of columns the board grid has.
-
 The script requires:
-    - built in utility "re" for splitting the input using multiple separators,
+    - "errors" module from the same directory and it's class:
+        - PlayerActionError
 
 The file contains following classes:
     - PlayerAction
 """
 
-import re
+from modules.game.errors import PlayerActionError
 
 
-class PlayerAction:
+class PlayerAction():
     """
     PlayerAction class with purpose of taking player input(action).
-    An action is formatted, validated and returned.
+    An action represents field selection and action taken on that field.
+    The class formats, validates and returns an action.
 
     Public methods:
         new_action()
@@ -46,103 +43,145 @@ class PlayerAction:
         self.rows = rows
         self.cols = cols
 
+        # Create Player Action Error object.
+        self.err = PlayerActionError(self.rows, self.cols)
+        # List of errors.
+        self.errs = []
+
     def new_action(self):
         """
-        Takes player input, formats it, and validates it.
+        Takes player input, and preforms formatting
+        and validation on the input.
 
-        :raises ValueError: Represents incorrect player input.
-        :return: Formatted player action in dictionary with 3 key-val pairs.
+        :return: Formatted player action which contains 3 key-val pairs.
             - action key contains player action (display or flag)
             - row key contains selected row
             - col key contains selected column.
         :rtype: dict
         """
 
-        try:
-            pl_action = input("Display or mark the field:  \n")
-            pl_action = re.split(r',| ', pl_action)
+        while True:
+            pl_action = input("Display or mark the field: \n")
+            pl_action = pl_action.replace(',', ' ').split()
 
-            formatted_action = self._format_action(pl_action)
+            self.errs = []
+            formatted_action = self._format(pl_action)
 
-            if self._check_action_vals(formatted_action.get("action"),
-                                       formatted_action.get("row"),
-                                       formatted_action.get("col")):
-                raise ValueError
-        except ValueError:
-            self._error_msg()
-            self.new_action()
-        else:
-            return formatted_action
+            # If it's validated break the loop.
+            if self._validation(formatted_action):
+                break
 
-    def _format_action(self, action):
+            self.err.display(self.errs, len(pl_action))
+
+        return formatted_action
+
+    def _format(self, pl_action):
         """
-        Formats player input depending on what kind of action they choose.
+        Checks the number of values passed as the player action.
+        If the values are of correct length, attempt to format and return
+        formatted values.
+        If the values are not of correct length that means
+        there is an passed argument number error and False value is returned.
 
-        :param action: User input representing player action.
-        :type action: list
-        :return: Formatted action.
-        :rtype: dict
+        :param pl_action: User input representing player action.
+        :type pl_action: list
+        :return: If formatted return Formatted action, otherwise False.
+        :rtype: dict(str, int, int)/False
         """
 
-        match len(action):
+        match len(pl_action):
             case 2:
-                return {
-                    "action": "display",
-                    "row": int(action[0])-1,
-                    "col": int(action[1])-1
-                }
+                # Return formatted values.
+                return self._formatted("display", pl_action[0], pl_action[1])
             case 3:
-                return {
-                    "action": action[0].lower().strip(),
-                    "row": int(action[1])-1,
-                    "col": int(action[2])-1
-                }
+                return self._formatted(pl_action[0],
+                                       pl_action[1],
+                                       pl_action[2])
             case _:
-                self._error_msg()
-                self.new_action()
+                # If the arg number in pl_action is not correct
+                # cannot proceed with formatting.
+                self.errs.append("arg num")
+                return False
 
-    def _check_action_vals(self, action, row, col):
+    def _formatted(self, action, row, col):
         """
-        Checks player entered values.
-        Checks the type of action, row and col.
-        Checks if row and col values are in range.
-        If any of checks fails, return true.
+        Checks action and field values.
+        If the values are not correct, append error to
+        errors and return False.
 
-        :param action: User input representing player action.
+        :param action: Represents user action: display/flag.
         :type action: string
+        :param row: Represents user selected board row.
+        :type row: string
+        :param col: Represents user selected board column.
+        :type col: string
+        :return: If row and col values are digits return formatted
+            value, otherwise False.
+        :rtype: dict(str, int, int)/False
+        """
+
+        # Row and col must be digits to be formatted.
+        if row.isdigit() and col.isdigit():
+            return {
+                "action": action,
+                "row": int(row)-1,
+                "col": int(col)-1
+            }
+
+        # Add errors to the list.
+        self._check_action_val(action)
+        self.errs.append("field val")
+
+        return False
+
+    def _validation(self, pl_action):
+        """
+        Preforms validation on formatted user action.
+        Validation is successful if pl_action does exist and
+        if there are no errors.
+
+        :param pl_action: Formatted player action.
+            If the var is formatted successfully, contains a dict,
+            otherwise contains value: False
+        :type pl_action: dict(str, int, int)/bool
+        :return: Returns True if the value is validated without errors,
+        otherwise False.
+        :rtype: bool
+        """
+
+        # Check if formatting was successful.
+        if pl_action:
+            # Check if values are correct.
+            self._check_action_val(pl_action.get("action"))
+            self._check_field_vals(pl_action.get("row"), pl_action.get("col"))
+
+            # No errors = validation passed!
+            if not self.errs:
+                return True
+
+        return False
+
+    def _check_action_val(self, action):
+        """
+        Checks if action value is "display" or "flag", if it's not
+        add error to errors.
+
+        :param action: Player selected action: display/flag.
+        :type action: str
+        """
+
+        if action not in ("display", "flag"):
+            self.errs.append("action val")
+
+    def _check_field_vals(self, row, col):
+        """
+        Checks if field values are in range of the board.
+
         :param row: Row picked by player.
         :type row: int
         :param col: Column picked by player.
         :type col: int
-        :return: True if any of checks passes, False otherwise.
-        :rtype: bool
         """
-
-        if (action != "display") and (action != "flag"):
-            return True
-
-        if (not isinstance(row, int)) or (not isinstance(col, int)):
-            return True
 
         if row not in range(0, self.rows) or col not in range(0, self.cols):
-            return True
-
-    def _error_msg(self):
-        """
-        Displays error originated from incorrect player action.
-        Displays action instructions for the player.
-        """
-
-        print("\n\nOh no! Incorrect value entered!")
-        print("-------------------------\n")
-
-        print("For DISPLAYING the field enter ----> row, col")
-        print("For FLAGGING the field enter ----> flag, row, col")
-        print("-------------------------\n")
-
-        print("Examples:\n----> 2, 3\n----> flag, 2, 3\n")
-        print("Restrictions: \n----> Row and col value must be in range!")
-        print(f"----> ROW: 1-{self.rows}\n----> COL: 1-{self.cols}")
-        print("-------------------------\n")
-
-        print("You can do it!\n\n")
+            self.errs.append("range")

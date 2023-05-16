@@ -10,12 +10,6 @@ Board functionalities include:
     - manipulation of field values,
     - displaying the board.
 
-Values required in order to use the board:
-    (rows, int), (cols, int), (mines, int).
-    - Rows - represent number of rows the board grid has.
-    - Cols - represent number of columns the board grid has.
-    - Mines - represent number of mines present on board.
-
 The script requires:
     - built in utility "random" for generation of random numbers,
     - consts from consts module:

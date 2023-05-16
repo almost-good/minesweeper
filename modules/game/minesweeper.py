@@ -7,12 +7,6 @@ is in charge of Minesweeper functionalities.
 Minesweeper functionalities include:
     - running the game.
 
-Values required in order to play the game:
-    (rows, int), (cols, int), (mines, int).
-    - Rows - represent number of rows the board grid has.
-    - Cols - represent number of columns the board grid has.
-    - Mines - represent number of mines present on board.
-
 The script requires:
     - built in utility "time" for elapsed time measurement,
     - "board" module from the same directory, and it's classes:
@@ -81,11 +75,10 @@ class Minesweeper:
 
             # Player field choice.
             action = self.pl_action.new_action()
-
-            self.pl_board.set_field(action["row"], action["col"])
+            self.pl_board.set_field(action.get("row"), action.get("col"))
 
             # Check if the game is over.
-            if self._game_over(action["row"], action["col"]):
+            if self._game_over(action.get("row"), action.get("col")):
                 break
 
             self.pl_board.display()
