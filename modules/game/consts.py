@@ -15,6 +15,7 @@ Constants list:
 HIDDEN = 'x'
 MINE = '*'
 EMPTY = '.'
+FLAG = '?'
 
 # Formula for getting adjacent board fields.
 OFFSETS = [(-1, -1), (-1, 0), (-1, 1), (0, -1),

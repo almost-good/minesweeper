@@ -78,8 +78,11 @@ class Minesweeper:
             if self.pl_board.field_visible(action_row, action_col):
                 self._field_visible_warning(action_row, action_col)
                 continue
-
-            self.pl_board.set_field(action_row, action_col)
+            
+            if action_type == "flag":
+                self.pl_board.flag_field(action_row, action_row)
+            else:
+                self.pl_board.set_field(action_row, action_col)
 
             # Check if the game is over.
             if self._game_over(action_row, action_col):

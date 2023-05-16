@@ -27,7 +27,7 @@ The file contains following classes:
 """
 
 import random
-from modules.game.consts import HIDDEN, MINE, EMPTY, OFFSETS
+from modules.game.consts import HIDDEN, MINE, EMPTY, OFFSETS, FLAG
 
 
 class Board:
@@ -251,7 +251,8 @@ class PlayerBoard(Board):
         :rtype: bool
         """
 
-        if self.board[row][col] == HIDDEN:
+        if self.board[row][col] == HIDDEN or \
+                self.board[row][col] == FLAG:
             return False
         return True
 
@@ -271,6 +272,12 @@ class PlayerBoard(Board):
         # If the field is empty, check other fields.
         if self.board[row][col] == EMPTY:
             self._set_connected_fields(row, col)
+
+    def flag_field(self, row, col):
+        if self.board[row][col] == FLAG:
+            self.board[row][col] = HIDDEN
+        elif self.board[row][col] == HIDDEN:
+            self.board[row][col] = FLAG
 
     def num_of_hidden_fields(self):
         """
