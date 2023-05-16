@@ -14,6 +14,10 @@ The script requires:
         - PlayerBoard,
     - "player_action" module from the same directory, and it's class:
         - PlayerAction.
+    - consts from consts module:
+        (HIDDEN, str, const), (MINE, str, const)
+        - HIDDEN - represents hidden value of the field.
+        - FLAG - represents flag value of the field.
 
 The file contains following classes:
     - Minesweeper
@@ -22,6 +26,7 @@ The file contains following classes:
 import time
 from modules.game.board import GameBoard, PlayerBoard
 from modules.game.player_action import PlayerAction
+from modules.game.consts import HIDDEN, FLAG
 
 
 class Minesweeper:
@@ -65,7 +70,7 @@ class Minesweeper:
 
         self.gm_board.display()
         self.pl_board.display()
-        
+
         # Time tracker.
         game_timer = time.time()
         self._display_game_footer(game_timer)
@@ -78,9 +83,10 @@ class Minesweeper:
             if self.pl_board.field_visible(action_row, action_col):
                 self._field_visible_warning(action_row, action_col)
                 continue
-            
+
             if action_type == "flag":
-                self.pl_board.flag_field(action_row, action_row)
+                self.pl_board.flag_field(action_row, action_col)
+                self.flags = self.mines - self.pl_board.num_of_fields(FLAG)
             else:
                 self.pl_board.set_field(action_row, action_col)
 
@@ -140,7 +146,7 @@ class Minesweeper:
             self._game_lose()
             return True
 
-        hidden_count = self.pl_board.num_of_hidden_fields()
+        hidden_count = self.pl_board.num_of_fields(HIDDEN)
         # If number of remaining fields is equal
         # to number of bombs, the game is won.
         if hidden_count == self.mines:

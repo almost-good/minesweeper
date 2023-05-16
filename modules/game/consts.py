@@ -8,6 +8,7 @@ Constants list:
     - MINE (str) - represents mine value of game board field.
     - EMPTY - represents empty value of game board field.
         Meaning there are no mines nearby to the field.
+    - FLAG - represents flag value of the field.
     - OFFSETS - formula for getting adjacent game board fields.
 """
 

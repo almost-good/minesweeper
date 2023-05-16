@@ -18,6 +18,7 @@ The script requires:
         - MINE - represents mine value of the field.
         - EMPTY - represents empty value of the field.
             Meaning there are no mines nearby to the field.
+        - FLAG - represents flag value of the field.
         - OFFSETS - formula for getting adjacent fields.
 
 The file contains following classes:
@@ -274,23 +275,33 @@ class PlayerBoard(Board):
             self._set_connected_fields(row, col)
 
     def flag_field(self, row, col):
+        """_summary_
+        Set the HIDDEN field value to the FLAG value
+        and vice versa.
+
+        :param row: Current field row of the grid.
+        :type row: int
+        :param col: Current field column of the grid.
+        :type col: int
+        """
+
         if self.board[row][col] == FLAG:
             self.board[row][col] = HIDDEN
         elif self.board[row][col] == HIDDEN:
             self.board[row][col] = FLAG
 
-    def num_of_hidden_fields(self):
+    def num_of_fields(self, field_type):
         """
-        Checks how many fields are HIDDEN on board.
+        Checks how many fields are of field_type on the board.
 
-        :return: Number of HIDDEN fields on board.
+        :return: Number of field_type fields on board.
         :rtype: int
         """
 
         count = 0
 
         for row in self.board:
-            count += row.count(HIDDEN)
+            count += row.count(field_type)
 
         return count
 
