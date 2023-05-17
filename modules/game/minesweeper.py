@@ -91,7 +91,7 @@ class Minesweeper:
                 self.pl_board.set_field(action_row, action_col)
 
             # Check if the game is over.
-            if self._game_over(action_row, action_col):
+            if self._game_over(action_row, action_col, action_type):
                 break
 
             self.pl_board.display()
@@ -128,7 +128,7 @@ class Minesweeper:
               "\nPick another!\n")
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-    def _game_over(self, row, col):
+    def _game_over(self, row, col, action_type):
         """
         Checks if the game is over, and if it's
         victory or defeat.
@@ -137,32 +137,75 @@ class Minesweeper:
         :type row: int
         :param col: Current field column of the grid.
         :type col: int
+        :param action_type: Player action.
+        :type action_type: str
         :return: True if the game is over, False otherwise.
         :rtype: bool
         """
 
-        # If the selected field is mine game is lost.
-        if self.gm_board.is_mine(row, col):
-            self._game_lose()
+        if self._game_lose(row, col, action_type):
+            self._defeat()
             return True
 
-        hidden_count = self.pl_board.num_of_fields(HIDDEN)
-        # If number of remaining fields is equal
-        # to number of bombs, the game is won.
-        if hidden_count == self.mines:
-            self._game_win()
+        if self._game_win():
+            self._victory()
             return True
 
         return False
 
-    def _game_lose(self):
+    def _game_lose(self, row, col, action_type):
+        """
+        Checks if the game is indeed lost.
+        The game is lost if selected field is mine, and
+        player action is "display".
+
+        :param row: Current field row of the grid.
+        :type row: int
+        :param col: Current field column of the grid.
+        :type col: int
+        :param action_type: Player action.
+        :type action_type: str
+        :return: True if the game is lost, False otherwise.
+        :rtype: bool
+        """
+
+        if self.gm_board.is_mine(row, col) and \
+                (action_type in "display"):
+            return True
+
+        return False
+
+    def _game_win(self):
+        """
+        Checks if the game is indeed won.
+        The game is won if number of remaining fields if equal
+        to mine count, or if count of mines flagged is equal to mine
+        count and flag count is 0.
+
+        :return: True if the game is won, False otherwise.
+        :rtype: bool
+        """
+
+        hidden_count = self.pl_board.num_of_fields(HIDDEN)
+        remaining_fields = hidden_count + self.mines - self.flags
+
+        # If number of remaining fields is equal to mine count -> victory.
+        # If count of mines flagged is equal to mine count, and flag count
+        if (remaining_fields) == self.mines or \
+                (self.pl_board.mine_flagged == self.mines and
+                 self.flags == 0):
+            return True
+
+        return False
+
+    def _defeat(self):
         """
         Displays that the game is lost.
         """
 
         print("GAME LOST")
 
-    def _game_win(self):
+    def _victory(self):
         """
         Displays that the game is won.
         """

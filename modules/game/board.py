@@ -220,8 +220,10 @@ class PlayerBoard(Board):
     Adds additional functionality specific to PlayerBoard.
 
     Public methods:
+        field_visible()
         set_field()
-        num_of_hidden_remaining()
+        flag_field()
+        num_of_fields()
     """
 
     def __init__(self, rows, cols, gm_board):
@@ -239,6 +241,7 @@ class PlayerBoard(Board):
 
         super().__init__(rows, cols)
         self.gm_board = gm_board
+        self.mine_flagged = 0
 
     def field_visible(self, row, col):
         """
@@ -287,8 +290,12 @@ class PlayerBoard(Board):
 
         if self.board[row][col] == FLAG:
             self.board[row][col] = HIDDEN
+            flag_action = False
         elif self.board[row][col] == HIDDEN:
             self.board[row][col] = FLAG
+            flag_action = True
+
+        self._mine_flagged(self.gm_board[row][col], flag_action)
 
     def num_of_fields(self, field_type):
         """
@@ -342,3 +349,19 @@ class PlayerBoard(Board):
                     if (self.board[row][col] == EMPTY) and \
                             ((row, col) not in fields):
                         fields.append((row, col))
+
+    def _mine_flagged(self, gm_board, flag_action):
+        """
+        Keeps count of correct fields being flagged.
+
+        :param gm_board: Game board field.
+        :type gm_board: str/int
+        :param flag_action: Specifies if the flagging took place.
+        :type flag_action: bool
+        """
+
+        if gm_board == MINE:
+            if flag_action:
+                self.mine_flagged += 1
+            else:
+                self.mine_flagged -= 1
