@@ -8,7 +8,7 @@ Game package includes following modules:
     - board - minesweeper's board.
     - player_action - player input action.
     - consts - constants used in package.
-    - errors - all possible errors.
+    - user alert - handles user alerts.
 
 Game modules use following built in utilities:
     - random

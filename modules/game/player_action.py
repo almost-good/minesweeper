@@ -2,7 +2,7 @@
 Player Action
 
 Player action module represents player action and is in charge
-of player action functionalities.
+of player action functionalities and it's alerts.
 
 Player action functionalities include:
     - preforming the action,
@@ -10,15 +10,10 @@ Player action functionalities include:
     - validating,
     - handling the errors.
 
-The script requires:
-    - "errors" module from the same directory and it's class:
-        - PlayerActionError
-
 The file contains following classes:
     - PlayerAction
+    - PlayerActionAlert
 """
-
-from modules.game.errors import PlayerActionError
 
 
 class PlayerAction():
@@ -44,46 +39,42 @@ class PlayerAction():
         self.cols = cols
 
         # Create Player Action Error object.
-        self.err = PlayerActionError(self.rows, self.cols)
-        # List of errors.
-        self.errs = []
+        self.alert = PlayerActionAlert(self.rows, self.cols)
+        # List of alerts.
+        self.alerts = []
 
     def new_action(self):
         """
         Takes player input, and preforms formatting
         and validation on the input.
 
-        :return: Formatted player action which contains 3 key-val pairs.
-            - action key contains player action (display or flag)
-            - row key contains selected row
-            - col key contains selected column.
-        :rtype: set
+        :raises ValueError: ValueError for incorrect input.
+        :return: Formatted tuple of input values.
+        :rtype: tuple
         """
 
         while True:
-            pl_action = input("Display or mark the field: \n")
-            pl_action = pl_action.replace(',', ' ').split()
+            try:
+                pl_action = input("Display or mark the field: \n")
+                pl_action = pl_action.replace(',', ' ').split()
 
-            self.errs = []
-            formatted_action = self._format(pl_action)
+                self.alerts = []
+                formatted_action = self._format(pl_action)
 
-            # If it's validated break the loop.
-            if self._validation(formatted_action):
-                break
+                # If it's validated break the loop.
+                if self._validation(formatted_action):
+                    return (formatted_action.get("action"),
+                            formatted_action.get("row"),
+                            formatted_action.get("col"))
 
-            self.err.display(self.errs, len(pl_action))
+                raise ValueError
 
-        return (formatted_action.get("action"),
-                formatted_action.get("row"),
-                formatted_action.get("col"))
+            except ValueError:
+                self.alert.display(self.alerts, len(pl_action))
 
     def _format(self, pl_action):
         """
         Checks the number of values passed as the player action.
-        If the values are of correct length, attempt to format and return
-        formatted values.
-        If the values are not of correct length that means
-        there is an passed argument number error and False value is returned.
 
         :param pl_action: User input representing player action.
         :type pl_action: list
@@ -102,14 +93,12 @@ class PlayerAction():
             case _:
                 # If the arg number in pl_action is not correct
                 # cannot proceed with formatting.
-                self.errs.append("arg num")
+                self.alerts.append("arg num")
                 return False
 
     def _formatted(self, action, row, col):
         """
         Checks action and field values.
-        If the values are not correct, append error to
-        errors and return False.
 
         :param action: Represents user action: display/flag.
         :type action: string
@@ -132,7 +121,7 @@ class PlayerAction():
 
         # Add errors to the list.
         self._check_action_val(action)
-        self.errs.append("field val")
+        self.alerts.append("field val")
 
         return False
 
@@ -140,7 +129,7 @@ class PlayerAction():
         """
         Preforms validation on formatted user action.
         Validation is successful if pl_action does exist and
-        if there are no errors.
+        if there are no alerts.
 
         :param pl_action: Formatted player action.
             If the var is formatted successfully, contains a dict,
@@ -158,22 +147,21 @@ class PlayerAction():
             self._check_field_vals(pl_action.get("row"), pl_action.get("col"))
 
             # No errors = validation passed!
-            if not self.errs:
+            if not self.alerts:
                 return True
 
         return False
 
     def _check_action_val(self, action):
         """
-        Checks if action value is "display" or "flag", if it's not
-        add error to errors.
+        Checks if action value is "display" or "flag".
 
         :param action: Player selected action: display/flag.
         :type action: str
         """
 
         if action not in ("display", "flag"):
-            self.errs.append("action val")
+            self.alerts.append("action val")
 
     def _check_field_vals(self, row, col):
         """
@@ -186,4 +174,91 @@ class PlayerAction():
         """
 
         if row not in range(0, self.rows) or col not in range(0, self.cols):
-            self.errs.append("range")
+            self.alerts.append("range")
+
+
+class PlayerActionAlert():
+    """
+    PlayerActionAlert class handles alerts raised during
+    the player action.
+
+    Public methods:
+        display()
+    """
+
+    def __init__(self, rows, cols):
+        """
+        Constructor method.
+
+        :param rows: Number of Board grid rows.
+        :type rows: int
+        :param cols: Number of Board grid columns.
+        :type cols: int
+        """
+
+        self.rows = rows
+        self.cols = cols
+
+        self.alerts = {}
+
+    def display(self,  applicable_alerts, vals):
+        """
+        Displays all applicable alerts.
+
+        :param applicable_alerts: List of different player action alerts.
+        :type applicable_alerts: list
+        :param vals: Number of values provided.
+        :type vals: int
+        """
+
+        self.alerts = {
+            "arg num": self._arg_num(vals),
+            "action val": "Incorrect action choosen!",
+            "field val": "Incorrect values entered for field selection!",
+            "range": "The values are out of range!"
+        }
+
+        print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("\nOh no!", end=" ")
+
+        for alert in applicable_alerts:
+            print(self.alerts[alert])
+
+        self._general()
+
+    def _arg_num(self, vals):
+        """
+        Checks how many values are provided and returns
+        corrseponding string.
+
+        :param vals: Number of values provided.
+        :type vals: int
+        :return: Error message.
+        :rtype: str
+        """
+
+        match vals:
+            case 0:
+                return "No value provided!"
+            case 1:
+                return "Only one value provided!"
+            case _:
+                return "Too many values provided!"
+
+    def _general(self):
+        """
+        General error text which is printed with every PlayerActionError.
+        """
+
+        print("\n\nExpected: \n")
+        print("> For DISPLAYING the field enter 2 digital values only!")
+        print(">>> row, col | 2, 3 | 2 3\n")
+        print("> For FLAGGING the field enter \"flag\" "
+              "followed by 2 digital values!")
+        print(">>> flag, row, col | flag, 2, 3 | FlAg 2 3\n")
+        print("> For removing a FLAG simply repeat FLAGGING command!")
+        print(">>> flag, row, col | flag, 2, 3 | FlAg 2 3\n")
+        print(f"> ROW should be between: 0 - {self.rows}")
+        print(f"> COLUMN should be between: 0 - {self.cols}")
+        print("\nTry again!\n")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")

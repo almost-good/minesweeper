@@ -8,30 +8,32 @@ Minesweeper functionalities include:
     - running the game.
 
 The script requires:
-    - built in utility "time" for elapsed time measurement,
+    - Built in utility "time" for elapsed time measurement.
+    - Built in utility "os" for clearing the terminal.
     - "board" module from the same directory, and it's classes:
         - GameBoard,
-        - PlayerBoard,
+        - PlayerBoard.
     - "player_action" module from the same directory, and it's class:
         - PlayerAction.
-    - consts from consts module:
-        (HIDDEN, str, const), (MINE, str, const)
-        - HIDDEN - represents hidden value of the field.
+    - "const" module from the same directory and it's consts:
+        - HIDDEN - represents hidden value of the field,
         - FLAG - represents flag value of the field.
 
 The file contains following classes:
-    - Minesweeper
+    - Minesweeper.
 """
 
 import time
+import os
 from modules.game.board import GameBoard, PlayerBoard
 from modules.game.player_action import PlayerAction
-from modules.game.consts import HIDDEN, FLAG
+from modules.game.user_alert import ContinueAlert
+from modules.game.consts import HIDDEN, FLAG, MINE
 
 
 class Minesweeper:
     """
-    Minesweeper class used to create and execute game object.
+    Minesweeper class creates and executes the game.
 
     Public methods:
         run()
@@ -66,36 +68,35 @@ class Minesweeper:
     def run(self):
         """
         Runs the Minesweeper game.
-        """
 
-        self.gm_board.display()
-        self.pl_board.display()
+        Displays the content, gets the user action,
+        checks if the board is visible, processes player
+        move, checks for game over.
+        """
 
         # Time tracker.
         game_timer = time.time()
-        self._display_game_footer(game_timer)
 
         while True:
+            # Clear the screen.
+            os.system('cls')
+
+            self.pl_board.display()
+            self._display_game_footer(game_timer)
+
             # Player action.
             action_type, action_row, action_col = self.pl_action.new_action()
 
             # Check if the field is visible, if not proceed.
-            if self.pl_board.field_visible(action_row, action_col):
+            if self.pl_board.is_visible(action_row, action_col):
                 self._field_visible_warning(action_row, action_col)
                 continue
 
-            if action_type == "flag":
-                self.pl_board.flag_field(action_row, action_col)
-                self.flags = self.mines - self.pl_board.num_of_fields(FLAG)
-            else:
-                self.pl_board.set_field(action_row, action_col)
+            self._player_move(action_type, action_row, action_col)
 
             # Check if the game is over.
             if self._game_over(action_row, action_col, action_type):
                 break
-
-            self.pl_board.display()
-            self._display_game_footer(game_timer)
 
     def _display_game_footer(self, timer_start):
         """
@@ -127,6 +128,61 @@ class Minesweeper:
               "\nThis field cannot take further actions."
               "\nPick another!\n")
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+
+    def _player_move(self, action, row, col):
+        """
+        Runs the player selected move.
+
+        :param action: Player action taken.
+        :type action: str
+        :param row: Selected field's row.
+        :type row: int
+        :param col: Selected field's column.
+        :type col: int
+        """
+
+        if action == "flag":
+            self._flag_move(row, col)
+        else:
+            self._display_move(action, row, col)
+
+    def _flag_move(self, row, col):
+        """
+        Calls the flagging of the field and updates flag count.
+
+        :param row: Selected field's row.
+        :type row: int
+        :param col: Selected field's column.
+        :type col: int
+        """
+
+        self.pl_board.flag_field(row, col)
+        self.flags = self.mines - self.pl_board.num_of_fields(FLAG)
+
+    def _display_move(self, action, row, col):
+        """
+        Calls the display action on the field if applicable.
+
+        :param action: Player action taken.
+        :type action: str
+        :param row: Selected field's row.
+        :type row: int
+        :param col: Selected field's column.
+        :type col: int
+        """
+
+        # Check if the field is flagged.
+        if self.pl_board.is_field_type(row, col, FLAG):
+            # Ask for confirmation to proceed.
+            confirmed = ContinueAlert().take_input(action)
+
+            if not confirmed:
+                return
+
+            self.flags += 1
+
+        # If the field is not flagged, set the field straight away.
+        self.pl_board.set_field(row, col)
 
     def _game_over(self, row, col, action_type):
         """
@@ -169,7 +225,7 @@ class Minesweeper:
         :rtype: bool
         """
 
-        if self.gm_board.is_mine(row, col) and \
+        if self.gm_board.is_field_type(row, col, MINE) and \
                 (action_type in "display"):
             return True
 
@@ -178,7 +234,7 @@ class Minesweeper:
     def _game_win(self):
         """
         Checks if the game is indeed won.
-        The game is won if number of remaining fields if equal
+        The game is won if number of remaining fields is equal
         to mine count, or if count of mines flagged is equal to mine
         count and flag count is 0.
 
@@ -189,10 +245,8 @@ class Minesweeper:
         hidden_count = self.pl_board.num_of_fields(HIDDEN)
         remaining_fields = hidden_count + self.mines - self.flags
 
-        # If number of remaining fields is equal to mine count -> victory.
-        # If count of mines flagged is equal to mine count, and flag count
         if (remaining_fields) == self.mines or \
-                (self.pl_board.mine_flagged == self.mines and
+                (self.pl_board.mines_flagged == self.mines and
                  self.flags == 0):
             return True
 

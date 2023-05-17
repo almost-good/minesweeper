@@ -11,9 +11,8 @@ Board functionalities include:
     - displaying the board.
 
 The script requires:
-    - built in utility "random" for generation of random numbers,
-    - consts from consts module:
-        (HIDDEN, str, const), (MINE, str, const)
+    - Built in utility "random" for generation of random numbers,
+    - "consts" module from same directory and it's consts:
         - HIDDEN - represents hidden value of the field.
         - MINE - represents mine value of the field.
         - EMPTY - represents empty value of the field.
@@ -37,6 +36,9 @@ class Board:
 
     Public methods:
         display()
+        create()
+        num_of_fields()
+        is_field_type()
     """
 
     def __init__(self, rows, cols):
@@ -51,9 +53,7 @@ class Board:
 
         self.rows = rows
         self.cols = cols
-        self.board = []
-
-        self._create_board()
+        self.board = self._create()
 
     def display(self):
         """
@@ -70,12 +70,55 @@ class Board:
 
             print()
 
-    def _create_board(self):
+    def _create(self):
         """
         Constructs the board using const HIDDEN for every field.
         """
-        self.board = [[HIDDEN for _ in range(self.cols)]
-                      for _ in range(self.rows)]
+
+        return [[HIDDEN for _ in range(self.cols)]
+                for _ in range(self.rows)]
+
+    def num_of_fields(self, field_type):
+        """
+        Checks how many fields are of field_type on the board.
+
+        :return: Number of field_type fields on board.
+        :rtype: int
+        """
+
+        count = 0
+
+        for row in self.board:
+            count += row.count(field_type)
+
+        return count
+
+    def is_field_type(self, row, col, field_type):
+        """
+        Checks if the field is of selected type.
+
+        :param row: Current field row of the grid.
+        :type row: int
+        :param col: Current field column of the grid.
+        :type col: int
+        :field_type: Represents type of a field.
+        :type field_type: str
+        :return: Returns True if it is mine, False otherwise.
+        :rtype: bool
+        """
+
+        if self.board[row][col] == field_type:
+            return True
+
+    def _display_row_indicators(self, row):
+        """
+        Displays row indicator to the left side of the board.
+
+        :param row: Current board row.
+        :type row: int
+        """
+
+        print(row+1, end='  | ')
 
     def _display_col_indicators(self, col):
         """
@@ -95,25 +138,12 @@ class Board:
 
         print()
 
-    def _display_row_indicators(self, row):
-        """
-        Displays row indicator to the left side of the board.
-
-        :param row: Current board row.
-        :type row: int
-        """
-
-        print(row+1, end='  | ')
-
 
 class GameBoard(Board):
     """
     GameBoard class which inherits the Board class, it is a Board object
     of the GameBoard type.
     Adds additional functionality specific to GameBoard.
-
-    Public methods:
-        is_mine()
     """
 
     def __init__(self, rows, cols, mines):
@@ -131,23 +161,9 @@ class GameBoard(Board):
         self.mines = mines
         super().__init__(rows, cols)
 
+        # Set up.
         self._place_mines()
         self._place_values()
-
-    def is_mine(self, row, col):
-        """
-        Checks if the field contains MINE or not.
-
-        :param row: Current field row of the grid.
-        :type row: int
-        :param col: Current field column of the grid.
-        :type col: int
-        :return: Returns True if it is mine, False otherwise.
-        :rtype: bool
-        """
-
-        if self.board[row][col] == MINE:
-            return True
 
     def _place_mines(self):
         """
@@ -161,7 +177,7 @@ class GameBoard(Board):
             row = field // self.cols
             col = field % self.cols
 
-            if self.is_mine(row, col):
+            if self.is_field_type(row, col, MINE):
                 continue
 
             self.board[row][col] = MINE
@@ -220,10 +236,9 @@ class PlayerBoard(Board):
     Adds additional functionality specific to PlayerBoard.
 
     Public methods:
-        field_visible()
         set_field()
         flag_field()
-        num_of_fields()
+        is_visible()
     """
 
     def __init__(self, rows, cols, gm_board):
@@ -240,25 +255,8 @@ class PlayerBoard(Board):
         """
 
         super().__init__(rows, cols)
-        self.gm_board = gm_board
-        self.mine_flagged = 0
-
-    def field_visible(self, row, col):
-        """
-        Checks if the field is already visible.
-
-        :param row: Selected board field row.
-        :type row: int
-        :param col: Selected board field column.
-        :type col: int
-        :return: If the field is visible True, False otherwise.
-        :rtype: bool
-        """
-
-        if self.board[row][col] == HIDDEN or \
-                self.board[row][col] == FLAG:
-            return False
-        return True
+        self.gm_board = gm_board  # GameBoard object.
+        self.mines_flagged = 0
 
     def set_field(self, row, col):
         """
@@ -297,20 +295,23 @@ class PlayerBoard(Board):
 
         self._mine_flagged(self.gm_board[row][col], flag_action)
 
-    def num_of_fields(self, field_type):
+    def is_visible(self, row, col):
         """
-        Checks how many fields are of field_type on the board.
+        Checks if the field is already visible.
 
-        :return: Number of field_type fields on board.
-        :rtype: int
+        :param row: Selected board field row.
+        :type row: int
+        :param col: Selected board field column.
+        :type col: int
+        :return: If the field is visible True, False otherwise.
+        :rtype: bool
         """
 
-        count = 0
+        if self.board[row][col] == HIDDEN or \
+                self.board[row][col] == FLAG:
+            return False
 
-        for row in self.board:
-            count += row.count(field_type)
-
-        return count
+        return True
 
     def _set_connected_fields(self, row, col):
         """
@@ -362,6 +363,6 @@ class PlayerBoard(Board):
 
         if gm_board == MINE:
             if flag_action:
-                self.mine_flagged += 1
+                self.mines_flagged += 1
             else:
-                self.mine_flagged -= 1
+                self.mines_flagged -= 1
