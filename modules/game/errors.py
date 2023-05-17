@@ -90,6 +90,8 @@ class PlayerActionError():
         print("> For FLAGGING the field enter \"flag\" "
               "followed by 2 digital values!")
         print(">>> flag, row, col | flag, 2, 3 | FlAg 2 3\n")
+        print("> For removing a FLAG simply repeat FLAGGING command!")
+        print(">>> flag, row, col | flag, 2, 3 | FlAg 2 3\n")
         print(f"> ROW should be between: 0 - {self.rows}")
         print(f"> COLUMN should be between: 0 - {self.cols}")
         print("\nTry again!\n")
