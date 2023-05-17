@@ -27,6 +27,7 @@ The file contains following classes:
 """
 
 import random
+# import colorama
 from modules.game.consts import HIDDEN, MINE, EMPTY, OFFSETS, FLAG
 
 
@@ -36,7 +37,6 @@ class Board:
 
     Public methods:
         display()
-        create()
         num_of_fields()
         is_field_type()
     """
@@ -63,20 +63,12 @@ class Board:
         self._display_col_indicators(self.cols)
         for row in range(self.rows):
             self._display_row_indicators(row)
-
             for col in range(self.cols):
                 # Prints the value of the board field.
-                print(self.board[row][col], end='  ')
+                statement = self._value_to_print(self.board[row][col])
+                print(statement, end='  ')
 
             print()
-
-    def _create(self):
-        """
-        Constructs the board using const HIDDEN for every field.
-        """
-
-        return [[HIDDEN for _ in range(self.cols)]
-                for _ in range(self.rows)]
 
     def num_of_fields(self, field_type):
         """
@@ -110,6 +102,14 @@ class Board:
         if self.board[row][col] == field_type:
             return True
 
+    def _create(self):
+        """
+        Constructs the board using const HIDDEN for every field.
+        """
+
+        return [[HIDDEN for _ in range(self.cols)]
+                for _ in range(self.rows)]
+
     def _display_row_indicators(self, row):
         """
         Displays row indicator to the left side of the board.
@@ -137,6 +137,33 @@ class Board:
             print('_', end='__')
 
         print()
+
+    def _value_to_print(self, field):
+        """
+        Gets the value to print.
+
+        :param field: Selected field.
+        :type field: list
+        :return: Value to print.
+        :rtype: str
+        """
+
+        board_values = {
+            HIDDEN: f'\033[39;2m{field}\033[0m',
+            EMPTY: f'\033[39;2m{field}\033[0m',
+            FLAG: f'\033[33;1m{field}\033[0m',
+            MINE: f'\033[40;31;1m{field}\033[0m',
+            1: f'\033[34;1m{field}\033[0m',
+            2: f'\033[32;1m{field}\033[0m',
+            3: f'\033[31;1m{field}\033[0m',
+            4: f'\033[35;1m{field}\033[0m',
+            5: f'\033[33;1m{field}\033[0m',
+            6: f'\033[36;1m{field}\033[0m',
+            7: f'\033[37;1m{field}\033[0m',
+            8: f'\033[31;1m{field}\033[0m'
+        }
+
+        return board_values[field]
 
 
 class GameBoard(Board):

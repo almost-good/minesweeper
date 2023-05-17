@@ -111,7 +111,9 @@ class Minesweeper:
         """
 
         timer = round(time.time() - timer_start)
-        print(f"\nMINES: {self.mines}\tFLAGS: {self.flags}\tTIMER: {timer}s\n")
+        print(f"\n\033[37;2mMINES:\033[0m \033[31;1m{self.mines}\033[0m"
+              f"\t\033[37;2mFLAGS:\033[0m \033[32;1m{self.flags}\033[0m"
+              f"\t\033[37;2mTIMER:\033[0m \033[33;1m{timer}\033[0m\n")
 
     def _field_visible_warning(self, row, col):
         """
