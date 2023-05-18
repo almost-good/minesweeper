@@ -11,7 +11,9 @@ Board functionalities include:
     - displaying the board.
 
 The script requires:
-    - Built in utility "random" for generation of random numbers,
+    - Built in utility "random" and it's method "randint"
+        for generation of random numbers,
+    - Built in utility "time" and it's method "sleep" for delay,
     - "consts" module from same directory and it's consts:
         - HIDDEN - represents hidden value of the field.
         - MINE - represents mine value of the field.
@@ -26,8 +28,8 @@ The file contains following classes:
     - PlayerBoard(Board)
 """
 
-import random
-# import colorama
+from random import randint
+from time import sleep
 from modules.game.consts import HIDDEN, MINE, EMPTY, OFFSETS, FLAG
 
 
@@ -62,7 +64,8 @@ class Board:
 
         self._display_col_indicators(self.cols)
         for row in range(self.rows):
-            self._display_row_indicators(row)
+            sleep(.05)
+            self._display_row_indicators(row+1)
             for col in range(self.cols):
                 # Prints the value of the board field.
                 statement = self._value_to_print(self.board[row][col])
@@ -118,7 +121,10 @@ class Board:
         :type row: int
         """
 
-        print(row+1, end='  | ')
+        if row > 9:
+            print(row, end=' | ')
+        else:
+            print(row, end='  | ')
 
     def _display_col_indicators(self, col):
         """
@@ -200,7 +206,7 @@ class GameBoard(Board):
         mine_count = 1
         while mine_count <= self.mines:
             # 0 <= field <= (rows x cols)
-            field = random.randint(0, (self.rows * self.cols)-1)
+            field = randint(0, (self.rows * self.cols)-1)
             row = field // self.cols
             col = field % self.cols
 

@@ -15,6 +15,7 @@ The file contains following classes:
     - PlayerActionAlert
 """
 
+import os
 
 class PlayerAction():
     """
@@ -55,7 +56,7 @@ class PlayerAction():
 
         while True:
             try:
-                pl_action = input("Display or mark the field: \n")
+                pl_action = input("\n\nDisplay or mark the field: \n\t")
                 pl_action = pl_action.replace(',', ' ').split()
 
                 self.alerts = []
@@ -211,6 +212,10 @@ class PlayerActionAlert():
         :type vals: int
         """
 
+        dim = os.get_terminal_size()[0]
+        separator = ['=' for d in range(dim)]
+        separator = ''.join(separator)
+
         self.alerts = {
             "arg num": self._arg_num(vals),
             "action val": "Incorrect action choosen!",
@@ -218,13 +223,13 @@ class PlayerActionAlert():
             "range": "The values are out of range!"
         }
 
-        print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print(f"\n{separator}")
         print("\nOh no!", end=" ")
 
         for alert in applicable_alerts:
             print(self.alerts[alert])
 
-        self._general()
+        self._general(separator)
 
     def _arg_num(self, vals):
         """
@@ -245,20 +250,20 @@ class PlayerActionAlert():
             case _:
                 return "Too many values provided!"
 
-    def _general(self):
+    def _general(self, separator):
         """
         General error text which is printed with every PlayerActionError.
         """
 
         print("\n\nExpected: \n")
-        print("> For DISPLAYING the field enter 2 digital values only!")
-        print(">>> row, col | 2, 3 | 2 3\n")
-        print("> For FLAGGING the field enter \"flag\" "
+        print("For DISPLAYING the field enter 2 digital values only!")
+        print("row, col | 2, 3 | 2 3\n")
+        print("For FLAGGING the field enter \"flag\" "
               "followed by 2 digital values!")
-        print(">>> flag, row, col | flag, 2, 3 | FlAg 2 3\n")
-        print("> For removing a FLAG simply repeat FLAGGING command!")
-        print(">>> flag, row, col | flag, 2, 3 | FlAg 2 3\n")
-        print(f"> ROW should be between: 0 - {self.rows}")
-        print(f"> COLUMN should be between: 0 - {self.cols}")
+        print("flag, row, col | flag, 2, 3 | FlAg 2 3\n")
+        print("For removing a FLAG simply repeat FLAGGING command!")
+        print("flag, row, col | flag, 2, 3 | FlAg 2 3\n")
+        print(f"ROW should be between: 0 - {self.rows}")
+        print(f"COLUMN should be between: 0 - {self.cols}")
         print("\nTry again!\n")
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+        print(f"{separator}\n")
