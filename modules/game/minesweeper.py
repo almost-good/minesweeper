@@ -13,6 +13,9 @@ The script requires:
     - "board" module from the same directory, and it's classes:
         - GameBoard,
         - PlayerBoard.
+    - "user_alert" module from the same directory, and it's classes:
+        - ContinueAlert
+        - YesOrNoAlert.
     - "player_action" module from the same directory, and it's class:
         - PlayerAction.
     - "const" module from the same directory and it's consts:
@@ -78,21 +81,19 @@ class Minesweeper:
         """
 
         # Time tracker.
-        game_timer = time()
+        timer_start = time()
 
         while True:
             # Clear the screen.
             os.system('clear')
 
-            # Display player board and game footer.
-            self.pl_board.display()
-            sleep(.15)
-            self._display_game_footer(game_timer)
-            sleep(.15)
+            # Display game content.
+            self._display_game(timer_start)
 
-            test = self.pl_action.new_action()
+            # Checks if the information is fetched correctly.
+            action_bundle = self.pl_action.new_action()
             try:
-                self.action_type, action_row, action_col = test
+                self.action_type, action_row, action_col = action_bundle
             except ValueError:
                 continue
 
@@ -106,6 +107,19 @@ class Minesweeper:
             # Check if the game is over.
             if self._game_over(action_row, action_col):
                 break
+
+    def _display_game(self, timer_start):
+        """
+        Displays all game contents; the board and footer.
+
+        :param timer_start: Number representing the time when the game started.
+        :type timer_start: Time object.
+        """
+
+        self.pl_board.display()
+        sleep(.15)
+        self._display_game_footer(timer_start)
+        sleep(.15)
 
     def _display_game_footer(self, timer_start):
         """
