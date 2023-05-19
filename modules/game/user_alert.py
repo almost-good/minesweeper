@@ -77,7 +77,7 @@ class YesOrNoAlert(Alert):
         super().__init__()
 
         self.alerts = {
-            "display": ["\033[31;2mYou suspected there is a MINE" +
+            "display": ["\033[31;1mYou suspected there is a MINE" +
                         " on this field!\033[0m\n"]
             }
 
@@ -141,7 +141,7 @@ class ContinueAlert(Alert):
         super().__init__()
 
         self.alerts = {
-            "field visible": ["\n\033[31;2mSelected field is not" +
+            "field visible": ["\033[31;1mSelected field is not" +
                               " hidden!\033[0m",
                               "\033[37;2mThis field cannot take" +
                               " further actions.",
@@ -201,7 +201,7 @@ class PlayerActionAlert(Alert):
 
         self.alerts = {
             "arg num": self._arg_num(vals),
-            "action val": "\033[31;2mIncorrect action choosen!",
+            "action val": "\033[31;1mIncorrect action choosen!",
             "field val": "Incorrect values entered for field selection!",
             "range": "The values are out of range!\033[0m"
         }
@@ -241,14 +241,15 @@ class PlayerActionAlert(Alert):
         """
 
         info = ["\033[33;1mExpected: \033[0m\n",
-                "\033[37;2mFor \033[33;2mDISPLAYING\033[37;2m" +
+                "\033[37;2mFor \033[0m\033[33;1mDISPLAYING\033[37;2m" +
                 " the field enter 2 digital values!\033[0m",
                 "\033[32;1mrow, col | 2, 3 | 2 3\033[0m",
-                "\033[37;2mFor \033[33;2mFLAGGING\033[37;2m the field enter" +
-                " \"flag\" followed by 2 digital values!\033[0m",
+                "\033[37;2mFor \033[0m\033[33;1mFLAGGING\033[37;2m the field" +
+                " enter \"flag\" followed by 2 digital values!\033[0m",
                 "\033[32;1mflag, row, col | flag, 2, 3 | FlAg 2 3\033[0m",
-                "\033[37;2mFor \033[33;2mREMOVING a FLAG\033[37;2m simply" +
-                " repeat \033[33;2mFLAGGING\033[37;2m command!\033[0m",
+                "\033[37;2mFor \033[0m\033[33;1mREMOVING a FLAG\033[37;2m " +
+                "simply repeat \033[0m\033[33;1mFLAGGING" +
+                "\033[37;2m command!\033[0m",
                 "\033[32;1mflag, row, col | flag, 2, 3 | FlAg 2 3\n\033[0m",
                 "\033[33;1mROW\033[0m should be between:" +
                 f" \033[32;1m0 - {self.rows}\033[0m",
@@ -270,8 +271,8 @@ class PlayerActionAlert(Alert):
 
         match vals:
             case 0:
-                return "\033[31;2mNo value provided!\033[0m"
+                return "\033[31;1mNo value provided!\033[0m"
             case 1:
-                return "\033[31;2mOnly one value provided!\033[0m"
+                return "\033[31;1mOnly one value provided!\033[0m"
             case _:
-                return "\033[31;2mToo many values provided!\033[0m"
+                return "\033[31;1mToo many values provided!\033[0m"

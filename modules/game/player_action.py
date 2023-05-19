@@ -60,7 +60,7 @@ class PlayerAction():
 
         while True:
             try:
-                pl_action = input("\n\nDisplay or mark the field: \n\t")
+                pl_action = input("\nDisplay or mark the field: \n\t")
                 pl_action = pl_action.replace(',', ' ').split()
 
                 self.alerts = []
