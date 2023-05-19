@@ -134,7 +134,7 @@ class Minesweeper:
 
         print(f"\n\033[37;2mMINES:\033[0m \033[31;1m{self.mines}\033[0m"
               f"\t\033[37;2mFLAGS:\033[0m \033[32;1m{self.flags}\033[0m"
-              f"\t\033[37;2mTIMER:\033[0m \033[33;1m{timer}\033[0m\n")
+              f"\t\033[37;2mTIMER:\033[0m \033[33;1m{timer}\033[0m")
 
     def _player_move(self, row, col):
         """

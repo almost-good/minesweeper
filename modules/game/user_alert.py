@@ -175,12 +175,12 @@ class ContinueAlert(Alert):
                               "Pick another!\033[0m"],
             "defeat": ["\033[31;1mDEFEAT!!!\033[0m",
                        "BOOM! The mine exploded!",
-                       f"\nSCORE: \033[31;1m{score}",
-                       "\n\033[37;2mPractice equals mastery!\033[0m"],
+                       f"SCORE: \033[31;1m{score}",
+                       "\033[37;2mPractice equals mastery!\033[0m"],
             "victory": ["\033[32;1mVICTORY!!!\033[0m",
                         "CHEERS! All mines are located!",
-                        f"\nSCORE: \033[32;1m{score}",
-                        "\n\033[37;2mCan you win in less time?\033[0m"]
+                        f"SCORE: \033[32;1m{score}",
+                        "\033[37;2mCan you win in less time?\033[0m"]
             }
 
         return self.alerts[alert]
