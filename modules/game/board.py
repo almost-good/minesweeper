@@ -158,7 +158,7 @@ class Board:
             HIDDEN: f'\033[39;2m{field}\033[0m',
             EMPTY: f'\033[39;2m{field}\033[0m',
             FLAG: f'\033[33;1m{field}\033[0m',
-            MINE: f'\033[40;31;1m{field}\033[0m',
+            MINE: f'\033[30;41;1m{field}\033[0m',
             1: f'\033[34;1m{field}\033[0m',
             2: f'\033[32;1m{field}\033[0m',
             3: f'\033[31;1m{field}\033[0m',
@@ -345,6 +345,16 @@ class PlayerBoard(Board):
             return False
 
         return True
+
+    def add_mines(self):
+        """
+        Add mines to the board if game board contains a mine.
+        """
+
+        for row in range(0, self.rows):
+            for col in range(0, self.cols):
+                if self.gm_board[row][col] == MINE:
+                    self.board[row][col] = MINE
 
     def _set_connected_fields(self, row, col):
         """

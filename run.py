@@ -6,7 +6,7 @@ def main():
     """
     Starts the program.
     """
-    game = Minesweeper(10, 10, 8)
+    game = Minesweeper(10, 10, 4)
     game.run()
 
 

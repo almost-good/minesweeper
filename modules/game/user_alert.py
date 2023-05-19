@@ -133,31 +133,19 @@ class ContinueAlert(Alert):
         take_input()
     """
 
-    def __init__(self):
-        """
-        Constructor method.
-        """
-
-        super().__init__()
-
-        self.alerts = {
-            "field visible": ["\033[31;1mSelected field is not" +
-                              " hidden!\033[0m",
-                              "\033[37;2mThis field cannot take" +
-                              " further actions.",
-                              "Pick another!\033[0m"]
-            }
-
-    def call_alert(self, alert):
+    def call_alert(self, alert, score=0):
         """
         Calls and runs the alert script for
         the specified alert.
 
         :param alert: Represents the alert in question
         :type alert: str
+        :param score: Represents the score achieved.
+        :type score: int
         """
 
-        self._display_alert(self.alerts[alert])
+        alert_text = self._get_alert(alert, score)
+        self._display_alert(alert_text)
         self.take_input()
 
     def take_input(self):
@@ -168,6 +156,34 @@ class ContinueAlert(Alert):
         sleep(.15)
 
         input("\nTo continue \033[33;1mpress any key...\033[0m \n\t")
+
+    def _get_alert(self, alert, score):
+        """_summary_
+
+        :param alert: Represents the alert in question
+        :type alert: str
+        :param score: Represents the score achieved.
+        :type score: int
+        :return: Specified alert list from possible alerts.
+        :rtype: list
+        """
+        self.alerts = {
+            "field visible": ["\033[31;1mSelected field is not" +
+                              " hidden!\033[0m",
+                              "\033[37;2mThis field cannot take" +
+                              " further actions.",
+                              "Pick another!\033[0m"],
+            "defeat": ["DEFEAT!",
+                       "BOOM! The mine exploded!",
+                       f"SCORE: {score}",
+                       "Practice equals mastery!"],
+            "victory": ["VICTORY",
+                        "YAY! All mines are located!",
+                        f"SCORE: {score}",
+                        "Can you win in less time?"]
+            }
+
+        return self.alerts[alert]
 
 
 class PlayerActionAlert(Alert):

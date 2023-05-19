@@ -61,6 +61,8 @@ class Minesweeper:
         self.flags = mines
 
         self.action_type = ""
+        self.timer_start = None
+        self.score = None
 
         # Create game and player board objects.
         self.gm_board = GameBoard(self.rows, self.cols, self.mines)
@@ -81,14 +83,14 @@ class Minesweeper:
         """
 
         # Time tracker.
-        timer_start = time()
+        self.timer_start = time()
 
         while True:
             # Clear the screen.
             os.system('clear')
 
             # Display game content.
-            self._display_game(timer_start)
+            self._display_game()
 
             # Checks if the information is fetched correctly.
             action_bundle = self.pl_action.new_action()
@@ -108,32 +110,28 @@ class Minesweeper:
             if self._game_over(action_row, action_col):
                 break
 
-    def _display_game(self, timer_start):
+    def _display_game(self):
         """
         Displays all game contents; the board and footer.
-
-        :param timer_start: Number representing the time when the game started.
-        :type timer_start: Time object.
         """
 
         self.pl_board.display()
+
         sleep(.15)
-        self._display_game_footer(timer_start)
+        self._display_game_footer()
         sleep(.15)
 
-    def _display_game_footer(self, timer_start):
+    def _display_game_footer(self):
         """
         Displays game footer.
         Game footer contains information:
             - Number of MINES on the board.
             - Number of remaining FLAGS.
             - Time elapsed from beginning of the game.
-
-        :param timer_start: Number representing the time when the game started.
-        :type timer_start: Time object.
         """
 
-        timer = round(time() - timer_start)
+        timer = self._get_time_passed()
+
         print(f"\n\033[37;2mMINES:\033[0m \033[31;1m{self.mines}\033[0m"
               f"\t\033[37;2mFLAGS:\033[0m \033[32;1m{self.flags}\033[0m"
               f"\t\033[37;2mTIMER:\033[0m \033[33;1m{timer}\033[0m\n")
@@ -194,7 +192,7 @@ class Minesweeper:
     def _game_over(self, row, col):
         """
         Checks if the game is over, and if it's
-        victory or defeat.
+        victory or defeat. Displays the game over screen.
 
         :param row: Current field row of the grid.
         :type row: int
@@ -204,12 +202,17 @@ class Minesweeper:
         :rtype: bool
         """
 
-        if self._game_lose(row, col):
-            self._defeat()
-            return True
+        result = None
 
+        if self._game_lose(row, col):
+            result = self._defeat()
         if self._game_win():
-            self._victory()
+            result = self._victory()
+
+        if result:
+            os.system('clear')
+            self._display_game()
+            ContinueAlert().call_alert(result, self.score)
             return True
 
         return False
@@ -257,14 +260,34 @@ class Minesweeper:
 
     def _defeat(self):
         """
-        Displays that the game is lost.
+        Prepares the board for it's defeat mode,
+        gets the score and returns that the game is indeed lost.
         """
 
-        print("GAME LOST")
+        # The board uncovers where all the mines are.
+        self.pl_board.add_mines()
+        self.score = 0 - self._get_time_passed()
+
+        return 'defeat'
 
     def _victory(self):
         """
-        Displays that the game is won.
+        Prepares the board for it's victory mode,
+        gets the score and returns that the game is indeed won.
         """
 
-        print("GAME WIN")
+        # The board is equal to the game board.
+        self.pl_board = self.gm_board
+        self.score = self._get_time_passed()
+
+        return 'victory'
+
+    def _get_time_passed(self):
+        """
+        Calculates how much time has passed from starting the game.
+
+        :return: Calculation how much time passed from starting the game.
+        :rtype: Time obj
+        """
+
+        return round(time() - self.timer_start - 1)
