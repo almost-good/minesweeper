@@ -30,7 +30,7 @@ The file contains following classes:
 
 from random import randint
 from time import sleep
-from modules.game.consts import HIDDEN, MINE, EMPTY, OFFSETS, FLAG
+from modules.consts import HIDDEN, MINE, EMPTY, OFFSETS, FLAG
 
 
 class Board:

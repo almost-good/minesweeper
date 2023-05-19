@@ -28,10 +28,10 @@ The file contains following classes:
 
 import os
 from time import time, sleep
-from modules.game.board import GameBoard, PlayerBoard
-from modules.game.player_action import PlayerAction
-from modules.game.user_alert import ContinueAlert, YesOrNoAlert
-from modules.game.consts import HIDDEN, FLAG, MINE
+from modules.board import GameBoard, PlayerBoard
+from modules.player_action import PlayerAction
+from modules.user_alert import ContinueAlert, YesOrNoAlert
+from modules.consts import HIDDEN, FLAG, MINE
 
 
 class Minesweeper:
@@ -117,7 +117,7 @@ class Minesweeper:
 
         self.pl_board.display()
 
-        sleep(.15)
+        sleep(.05)
         self._display_game_footer()
         sleep(.15)
 
@@ -178,7 +178,7 @@ class Minesweeper:
         if self.pl_board.is_field_type(row, col, FLAG):
             # Ask for confirmation to proceed.
             to_continue = YesOrNoAlert().call_alert(self.action_type)
-            sleep(.5)
+            sleep(.15)
 
             if not to_continue:
                 self.action_type = ""  # Reset.

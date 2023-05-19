@@ -1,11 +1,13 @@
 import database
-from modules.game.minesweeper import Minesweeper
+from modules.minesweeper import Minesweeper
 
 
 def main():
     """
     Starts the program.
     """
+
+
     game = Minesweeper(10, 10, 4)
     game.run()
 

@@ -18,7 +18,7 @@ The file contains following classes:
     - PlayerAction
 """
 
-from modules.game.user_alert import PlayerActionAlert
+from modules.user_alert import PlayerActionAlert
 
 
 class PlayerAction():
