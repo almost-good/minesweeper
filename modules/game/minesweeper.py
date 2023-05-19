@@ -27,7 +27,7 @@ import os
 from time import time, sleep
 from modules.game.board import GameBoard, PlayerBoard
 from modules.game.player_action import PlayerAction
-from modules.game.user_alert import ContinueAlert
+from modules.game.user_alert import ContinueAlert, YesOrNoAlert
 from modules.game.consts import HIDDEN, FLAG, MINE
 
 
@@ -84,18 +84,21 @@ class Minesweeper:
             # Clear the screen.
             os.system('clear')
 
+            # Display player board and game footer.
             self.pl_board.display()
-            sleep(.2)
+            sleep(.15)
             self._display_game_footer(game_timer)
+            sleep(.15)
 
-            sleep(.2)
-
-            self.action_type, action_row, action_col = \
-                self.pl_action.new_action()
+            test = self.pl_action.new_action()
+            try:
+                self.action_type, action_row, action_col = test
+            except ValueError:
+                continue
 
             # Check if the field is visible, if not proceed.
             if self.pl_board.is_visible(action_row, action_col):
-                self._field_visible_warning(action_row, action_col)
+                ContinueAlert().call_alert("field visible")
                 continue
 
             self._player_move(action_row, action_col)
@@ -120,23 +123,6 @@ class Minesweeper:
         print(f"\n\033[37;2mMINES:\033[0m \033[31;1m{self.mines}\033[0m"
               f"\t\033[37;2mFLAGS:\033[0m \033[32;1m{self.flags}\033[0m"
               f"\t\033[37;2mTIMER:\033[0m \033[33;1m{timer}\033[0m\n")
-
-    def _field_visible_warning(self, row, col):
-        """
-        Displays field already visible warning.
-
-        :param row: Selected player board field row.
-        :type row: int
-        :param col: Selected player board field column.
-        :type col: int
-        """
-
-        print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        print(f"\n{row+1} {col+1} field is not hidden!"
-              "\nThis field cannot take further actions."
-              "\nPick another!\n")
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-        sleep(2)
 
     def _player_move(self, row, col):
         """
@@ -179,12 +165,11 @@ class Minesweeper:
         # Check if the field is flagged.
         if self.pl_board.is_field_type(row, col, FLAG):
             # Ask for confirmation to proceed.
-            confirmed = ContinueAlert().take_input(self.action_type)
+            to_continue = YesOrNoAlert().call_alert(self.action_type)
             sleep(.5)
 
-            if not confirmed:
+            if not to_continue:
                 self.action_type = ""  # Reset.
-                print(self.action_type)
                 return
 
             self.flags += 1

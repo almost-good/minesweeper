@@ -10,12 +10,16 @@ Player action functionalities include:
     - validating,
     - handling the errors.
 
+The script requires:
+    - "user alert" module from the same directory, and it's class:
+        - PlayerActionAlert.
+
 The file contains following classes:
     - PlayerAction
-    - PlayerActionAlert
 """
 
-import os
+from modules.game.user_alert import PlayerActionAlert
+
 
 class PlayerAction():
     """
@@ -40,7 +44,7 @@ class PlayerAction():
         self.cols = cols
 
         # Create Player Action Error object.
-        self.alert = PlayerActionAlert(self.rows, self.cols)
+
         # List of alerts.
         self.alerts = []
 
@@ -71,7 +75,11 @@ class PlayerAction():
                 raise ValueError
 
             except ValueError:
-                self.alert.display(self.alerts, len(pl_action))
+                PlayerActionAlert(self.rows,
+                                  self.cols,
+                                  self.alerts,
+                                  len(pl_action)).call_alert()
+                return ()
 
     def _format(self, pl_action):
         """
@@ -176,94 +184,3 @@ class PlayerAction():
 
         if row not in range(0, self.rows) or col not in range(0, self.cols):
             self.alerts.append("range")
-
-
-class PlayerActionAlert():
-    """
-    PlayerActionAlert class handles alerts raised during
-    the player action.
-
-    Public methods:
-        display()
-    """
-
-    def __init__(self, rows, cols):
-        """
-        Constructor method.
-
-        :param rows: Number of Board grid rows.
-        :type rows: int
-        :param cols: Number of Board grid columns.
-        :type cols: int
-        """
-
-        self.rows = rows
-        self.cols = cols
-
-        self.alerts = {}
-
-    def display(self,  applicable_alerts, vals):
-        """
-        Displays all applicable alerts.
-
-        :param applicable_alerts: List of different player action alerts.
-        :type applicable_alerts: list
-        :param vals: Number of values provided.
-        :type vals: int
-        """
-
-        dim = os.get_terminal_size()[0]
-        separator = ['=' for d in range(dim)]
-        separator = ''.join(separator)
-
-        self.alerts = {
-            "arg num": self._arg_num(vals),
-            "action val": "Incorrect action choosen!",
-            "field val": "Incorrect values entered for field selection!",
-            "range": "The values are out of range!"
-        }
-
-        print(f"\n{separator}")
-        print("\nOh no!", end=" ")
-
-        for alert in applicable_alerts:
-            print(self.alerts[alert])
-
-        self._general(separator)
-
-    def _arg_num(self, vals):
-        """
-        Checks how many values are provided and returns
-        corrseponding string.
-
-        :param vals: Number of values provided.
-        :type vals: int
-        :return: Error message.
-        :rtype: str
-        """
-
-        match vals:
-            case 0:
-                return "No value provided!"
-            case 1:
-                return "Only one value provided!"
-            case _:
-                return "Too many values provided!"
-
-    def _general(self, separator):
-        """
-        General error text which is printed with every PlayerActionError.
-        """
-
-        print("\n\nExpected: \n")
-        print("For DISPLAYING the field enter 2 digital values only!")
-        print("row, col | 2, 3 | 2 3\n")
-        print("For FLAGGING the field enter \"flag\" "
-              "followed by 2 digital values!")
-        print("flag, row, col | flag, 2, 3 | FlAg 2 3\n")
-        print("For removing a FLAG simply repeat FLAGGING command!")
-        print("flag, row, col | flag, 2, 3 | FlAg 2 3\n")
-        print(f"ROW should be between: 0 - {self.rows}")
-        print(f"COLUMN should be between: 0 - {self.cols}")
-        print("\nTry again!\n")
-        print(f"{separator}\n")
