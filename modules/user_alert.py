@@ -155,7 +155,7 @@ class ContinueAlert(Alert):
 
         sleep(.15)
 
-        input("\nTo continue \033[33;1mpress any key...\033[0m \n\t")
+        input("\nTo continue \033[33;1mpress enter...\033[0m \n\t")
 
     def _get_alert(self, alert, score):
         """_summary_
@@ -217,9 +217,10 @@ class PlayerActionAlert(Alert):
 
         self.alerts = {
             "arg num": self._arg_num(vals),
-            "action val": "\033[31;1mIncorrect action choosen!",
-            "field val": "Incorrect values entered for field selection!",
-            "range": "The values are out of range!\033[0m"
+            "action val": "\033[31;1mIncorrect action choosen!\033[0m",
+            "field val": "\033[31;1mIncorrect values entered for" +
+            " field selection!\033[0m",
+            "range": "\033[31;1mThe values are out of range!\033[0m"
         }
 
         self.action_info = self._action_info()
