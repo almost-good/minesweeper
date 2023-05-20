@@ -77,8 +77,11 @@ class YesOrNoAlert(Alert):
 
         self.alerts = {
             "display": ["\033[31;1mYou suspected there is a MINE" +
-                        " on this field!\033[0m\n"],
-            "play again": ["The more you play the better you're going to be!"]
+                        " on this field!\033[0m\n",
+                        "Continue?"],
+            "play again": ["\033[32;1mThe more you play the better" +
+                           " you're going to be!\033[0m\n",
+                           "Play again?"]
             }
 
     def call_alert(self, alert):
@@ -108,7 +111,7 @@ class YesOrNoAlert(Alert):
             try:
                 sleep(.15)
 
-                user_input = input("Continue \033[33;1m(y/n)\033[0m?: \n\t")
+                user_input = input("\033[33;1m(y/n)\033[0m: \n\t")
                 user_input = user_input.strip()
 
                 match user_input:

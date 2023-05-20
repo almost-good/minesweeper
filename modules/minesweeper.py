@@ -204,7 +204,7 @@ class Minesweeper:
 
         if self._game_lose(row, col):
             result = self._defeat()
-        if self._game_win():
+        elif self._game_win():
             result = self._victory()
 
         if result:
