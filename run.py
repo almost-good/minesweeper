@@ -1,3 +1,13 @@
+"""
+Minesweeper app.
+
+Main module of the application.
+Runs the app.
+
+Functions:
+    - print_screen()
+    - main()
+"""
 
 import os
 from art import tprint
@@ -6,6 +16,12 @@ from modules.user_alert import ContinueAlert, YesOrNoAlert
 
 
 def print_screen(screen):
+    """
+    Prints the screen information.
+
+    :param screen: Represents the screen to be printed.
+    :type screen: str
+    """
     os.system("clear")
 
     header = " "*3 + "MINESWEEPER"
@@ -16,7 +32,10 @@ def print_screen(screen):
 
 def main():
     """
-    Starts the program.
+    Main program function.
+
+    Creates welcome and info screen and runs a a game
+    until the player decides to exit.
     """
     print_screen('welcome screen')
     print_screen('info screen')
