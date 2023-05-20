@@ -185,9 +185,9 @@ class ContinueAlert(Alert):
                                "\n\033[37;2mLooking for a bit of fun time?",
                                "Tired of advanced graphics in gaming?",
                                "Feeling nostalgic?\033[0m",
-                               "\n\n\033[36;1mWell..",
+                               "\n\033[36;1mWell..",
                                "..this is a place to be!\033[0m",
-                               "\n\n\033[37;2mDive in textual gaming" +
+                               "\n\033[37;2mDive in textual gaming" +
                                " with \033[0m\033[36;1mMINESWEEPER!\033[0m"]
             }
 
