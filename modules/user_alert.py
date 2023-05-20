@@ -112,7 +112,7 @@ class YesOrNoAlert(Alert):
                 sleep(.15)
 
                 user_input = input("\033[33;1m(y/n)\033[0m: \n\t")
-                user_input = user_input.strip()
+                user_input = user_input.strip().lower()
 
                 match user_input:
                     case 'y':

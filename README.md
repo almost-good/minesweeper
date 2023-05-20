@@ -411,6 +411,15 @@ Back to [Table of Contents](#table-of-contents)
 
 ## **Bugs**
 
+### **Known Bugs**
+Favicon is not displaying. 
+
+### **Limitations**
+There were almost no bugs encountered, what I experienced instead were limitations from both me and the usage of Python in the terminal.
+
+One particular instance is an attempt to remove the scrollbar.
+The "clear" screen command only pushes the content down, instead of completely wiping the screen clean.
+Since I am still lacking in subprocessing knowledge to execute the removal of the scrollbar successfully through Python, I went ahead and set the display property of the terminal scrollbar to "None", so the scrollbar was successfully removed, and scrolling of the screen using the mouse scroll is not possible. The screen can still be scrolled upwards when the mouse left button is held and dragged up.
 
 Back to [Table of Contents](#table-of-contents)
 
