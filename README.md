@@ -239,6 +239,102 @@ Back to [Table of Contents](#table-of-contents)
 
 ## **Features**
 
+### **Welcome Screen**
+![Welcome Screen feat](./assets/docs/features/feat-welcome-screen.jpg)
+- Contains game title with text prompting the player to take action.
+- The player can click enter and continue.
+
+
+### **Intro Screen**
+![Intro Screen feat](./assets/docs/features/feat-intro-screen.jpg)
+- Contains game title with intro text briefly explaining the game objective and commands.
+- The player can click enter and continue.
+
+
+### **Game Screen**
+![Game Screen feat](./assets/docs/features/feat-game-screen.jpg)
+- Contains row and column indicators and the game board represented by "x" signs.
+- The footer displays mines, flags and the timer.
+  - **Mine** count represents how many mines are on the board. The number remains the same throughout the game.
+  - **Flag** count represents how many flags are left. The flag count diminishes as the player sets them on the board. It can go into a negative value signalling that some flags are misplaced.
+  - **Timer** counts how much time has passed from the beginning of one game. The same timer later represents the score, which can be negative, depending if the game is won or lost.
+- The player is prompted to take an action, either to display or mark the field.
+
+
+### **Display and Flag actions**
+- **Display** action
+  - Display action is used to display the hidden field.
+  - Display command: **row, col**
+    - The command takes in two numbers, the first one representing the row of the board and the second one column. Commands can be separated by either spaces or commas5
+    - Commands are restricted by the type of input and range.
+- **Flag** action
+  - Flag action is used to indicate a mine without letting the mine go BOOM.
+  - Flag command: **flag, row, col**
+    - The command takes in three values:
+      - **flag** command in itself, in a string format. The casing of the command is not important.
+      - Two number values, same as with "display", representing the board's row and column.
+    - The commands can be separated in the same way as with the "display" action, and are restricted by the same restrictions.
+  - When flagging takes place, the **flag** counter decreases.
+  - **Unflagging the flagged** field
+    - Fields previously flagged can be unflagged by repeating the same flagging command.
+    - When the field is unflagged, the **flag** counter increases.
+
+
+### **INVALID Display and Flag actions**
+![Invalid Action feat](./assets/docs/features/feat-invalid-action.jpg)
+- Invalid actions can happen in several ways:
+  - Player entered too few values/too many values,
+  - Values entered are not of the correct format,
+  - Values are out of range.
+- Depending on the case, the correct error will be displayed, and if more than one is valid, they will display in a sequence.
+- The error will always be followed by a helper script, pointing the player to what input is expected.
+- The player is then prompted to press enter for continuation.
+
+
+### **The Board**
+- **Flagging command** can have two results:
+  - The field is flagged/unflagged depending on its previous state.
+  - ![Flagging Action feat](./assets/docs/features/feat-flagging-action.jpg)
+- **Displaying command** can have three variations:
+  - **Display single field.**
+    - Only displays the selected field.
+    - This can happen because the field is either a numeric value or a **mine**.
+      - If the field is indeed mine, the game is lost.
+      - When a field is numerical, its value represents the number of mines adjacent to that specific field. The value can range from 0 to a maximum of 8.
+        - ![One Field Display feat](./assets/docs/features/feat-one-field-display.jpg)
+  - **Displaying multiple fields.**
+    - When the field selected is **empty**, meaning there are no mines next to it, they will reveal its adjacent fields. The reveal will go on until numerical or flagged fields are hit.
+    - ![Multiple Field Display feat](./assets/docs/features/feat-multiple-field-display.jpg)
+  - **Displaying flagged field.**
+  -![Displaying Flagged feat](./assets/docs/features/feat-displaying-flagged.jpg)
+    - When attempting a direct display of the flagged field, the player will first encounter a warning text, followed by a confirmation prompt.
+    - **Confirmation prompt.** can only register "y/n" single letter values.
+      - When the player confirms, the field is displayed, and when confirmation is refused, the command cancels.
+      - In the case of incorrect input, the player receives an error message, with repeated prompt.
+- Attempting to display/flag an already "displayed" field results in an error. The player is then asked to go back to action selection.
+  - ![Displaying Displayed feat](./assets/docs/features/feat-displaying-displayed.jpg)
+
+
+### **Victory and Defeat**
+- **Defeat**
+  - ![Defeat feat](./assets/docs/features/feat-defeat.jpg)
+  - When the field selected is a mine, the game is lost.
+  - Following defeat all the mines on the board are displayed, while the rest of the board is in the same state it was prior to defeat.
+- **Victory**
+  - ![Victory feat](./assets/docs/features/feat-victory.jpg)
+  - When all of the mines are flagged, the game is won. The game can also be won if the number of remaining hidden + flagged fields is equal to the mine count.
+  - Following the victory, all board fields are displayed.
+- The player is shown their result and prompted for continuation.
+- **Scoring**
+  - The minesweeper score is equal to the time passed from the starting point of the game.
+  - The goal is to find all mines in the least time possible.
+  - The score is considered higher by its proximity to zero, closer to zero, the higher the score.
+  - Negative score is evaluated differently, it's there purely so the player is able to see how much time they spent playing. A negative score has a negative value. 
+- **Play Again**
+  - ![Play Again feat](./assets/docs/features/feat-play-again.jpg)
+  - After the game is finished, the player is prompted to play again.
+    - When the player agrees, a new game will start, and if the player refuses the app will finish.
+
 
 Back to [Table of Contents](#table-of-contents)
 
