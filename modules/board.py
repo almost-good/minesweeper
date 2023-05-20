@@ -57,6 +57,8 @@ class Board:
         self.cols = cols
         self.board = self._create()
 
+        self.initial_run = True
+
     def display(self):
         """
         Displays the board on the screen.
@@ -64,7 +66,9 @@ class Board:
 
         self._display_col_indicators(self.cols)
         for row in range(self.rows):
-            sleep(.05)
+            if self.initial_run:
+                sleep(.05)
+
             self._display_row_indicators(row+1)
             for col in range(self.cols):
                 # Prints the value of the board field.
@@ -72,6 +76,8 @@ class Board:
                 print(statement, end='  ')
 
             print()
+
+        self.initial_run = False
 
     def num_of_fields(self, field_type):
         """

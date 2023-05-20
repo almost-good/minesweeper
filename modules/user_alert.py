@@ -60,7 +60,6 @@ class Alert():
         separator = ['=' for d in range(terminal_width)]
         separator = f"\n\033[37;2m{''.join(separator)}\033[0m\n"
 
-        sleep(.15)
         print(separator)
 
 
@@ -200,7 +199,7 @@ class ContinueAlert(Alert):
                             "\tCommand:\033[0m \033[32;1mrow col | 2 3\033[0m",
                             "\033[36;1mFLAGGED\033[0m \033[37;2m= " +
                             "indicator of potentional mine!\033[0m" +
-                            " \033[33;1m=*To unflag a field, repeat the" +
+                            " \033[33;1m*To UNFLAG: repeat the" +
                             " flag command.\033[0m",
                             "\t\033[37;2mCommand:\033[0m \033[32;1mflag" +
                             " row col | flag 2 3\033[0m",
