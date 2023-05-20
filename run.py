@@ -10,7 +10,8 @@ def main():
     Starts the program.
     """
     os.system("clear")
-    tprint("MINESWEEPER", font="avatar")
+
+    tprint(" "*3 + "MINESWEEPER", font="avatar")
 
     ContinueAlert().call_alert("welcome screen")
 
