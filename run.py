@@ -48,6 +48,7 @@ def main():
 
         if not play_again:
             break
+    os.system("clear")
     exit()
 
 
