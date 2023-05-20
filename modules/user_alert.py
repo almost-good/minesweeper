@@ -77,7 +77,8 @@ class YesOrNoAlert(Alert):
 
         self.alerts = {
             "display": ["\033[31;1mYou suspected there is a MINE" +
-                        " on this field!\033[0m\n"]
+                        " on this field!\033[0m\n"],
+            "play again": ["The more you play the better you're going to be!"]
             }
 
     def call_alert(self, alert):

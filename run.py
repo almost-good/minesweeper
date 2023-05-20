@@ -2,7 +2,7 @@
 import os
 from art import tprint
 from modules.minesweeper import Minesweeper
-from modules.user_alert import ContinueAlert
+from modules.user_alert import ContinueAlert, YesOrNoAlert
 
 
 def print_screen(screen):
@@ -11,7 +11,7 @@ def print_screen(screen):
     header = " "*3 + "MINESWEEPER"
     tprint(header, font="avatar")
 
-    ContinueAlert().call_alert("screen")
+    ContinueAlert().call_alert(screen)
 
 
 def main():
@@ -21,8 +21,14 @@ def main():
     print_screen('welcome screen')
     print_screen('info screen')
 
-    game = Minesweeper(10, 10, 4)
-    game.run()
+    while True:
+        game = Minesweeper(10, 10, 1)
+        game.run()
+
+        play_again = YesOrNoAlert().call_alert('play again')
+
+        if not play_again:
+            break
 
 
 if __name__ == "__main__":
