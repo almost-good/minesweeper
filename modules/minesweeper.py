@@ -117,9 +117,7 @@ class Minesweeper:
 
         self.pl_board.display()
 
-        sleep(.05)
         self._display_game_footer()
-        sleep(.15)
 
     def _display_game_footer(self):
         """

@@ -5,20 +5,21 @@ from modules.minesweeper import Minesweeper
 from modules.user_alert import ContinueAlert
 
 
+def print_screen(screen):
+    os.system("clear")
+
+    header = " "*3 + "MINESWEEPER"
+    tprint(header, font="avatar")
+
+    ContinueAlert().call_alert("screen")
+
+
 def main():
     """
     Starts the program.
     """
-    os.system("clear")
-    header = " "*3 + "MINESWEEPER"
-    tprint(header, font="avatar")
-
-    ContinueAlert().call_alert("welcome screen")
-    os.system("clear")
-    header = " "*3 + "MINESWEEPER"
-    tprint(header, font="avatar")
-
-    ContinueAlert().call_alert("info screen")
+    print_screen('welcome screen')
+    print_screen('info screen')
 
     game = Minesweeper(10, 10, 4)
     game.run()
