@@ -4,12 +4,13 @@ from art import tprint
 from modules.minesweeper import Minesweeper
 from modules.user_alert import ContinueAlert
 
+
 def main():
     """
     Starts the program.
     """
     os.system("clear")
-    tprint("MINESWEEPER")
+    tprint("MINESWEEPER", font="avatar")
 
     ContinueAlert().call_alert("welcome screen")
 
