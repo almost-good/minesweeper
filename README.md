@@ -412,7 +412,8 @@ Back to [Table of Contents](#table-of-contents)
 ## **Bugs**
 
 ### **Known Bugs**
-Favicon is not displaying. 
+Favicon is not displaying.
+UPDATE: The favicon is fixed. I changed nothing in the code.
 
 ### **Limitations**
 There were almost no bugs encountered, what I experienced instead were limitations from both me and the usage of Python in the terminal.
