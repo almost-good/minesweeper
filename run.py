@@ -41,7 +41,7 @@ def main():
     print_screen('info screen')
 
     while True:
-        game = Minesweeper(10, 10, 25)
+        game = Minesweeper(10, 10, 10)
         game.run()
 
         play_again = YesOrNoAlert().call_alert('play again')
