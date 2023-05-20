@@ -1,6 +1,12 @@
 # Minesweeper
 
-**Minesweeper** is a *puzzle-type text-based game* which runs directly in the terminal. The objective is to flag all mines in the shortest amount of time. The player can choose the desired difficulty from the predefined options or customize the game rules directly. The entire app can be accessed as a guest or as a registered user. If the user chooses to register, they will gain access to various gameplay information and be able to change their status.
+**Minesweeper** is a *puzzle-type text-based game* which runs directly in the terminal. The objective is to flag all mines in the shortest amount of time. When all mines are flagged, or if the number of remaining fields on the board equals the number of mines - the game is won. When a player selects a field containing a mine to be displayed, the game is lost.
+
+<br>
+
+![Mockup](./assets/docs/ms-mockup.jpg)
+
+<br>
 
 Deployed site can be accesed: [HERE](https://minesweeper-app.herokuapp.com).
 
@@ -60,53 +66,6 @@ If the user set all of their flags and did not win the game, it means some of th
   - Same as flag a mine.
   - **flag-keyword, row-value, col-value**
 
-### **Game Modes**
-
-The player can choose between easy, normal, hard and practice modes.<br>
-All modes except the fun one come with a predefined number of grid rows, columns and mines.
-
-#### **Easy mode**
-  > *Num of rows:*
-  >
-  > *Num of cols:*
-  >
-  > *Num of mines:*
-
-#### **Normal mode**
-  > *Num of rows:*
-  >
-  > *Num of cols:*
-  >
-  > *Num of mines:*
-
-#### **Hard mode**
-  > *Num of rows:*
-  >
-  > *Num of cols:*
-  >
-  > *Num of mines:*
-
-#### **Practice mode**
-- Practice mode allows players to customize the game. The player can select a number of rows, columns and mines they wish to play with, but is at the same time restricted with minimum and maximum values they can select. Practice mode is not scored.
-  > *Num of rows:*
-  >
-  > *Num of cols:*
-  >
-  > *Num of mines:*
-
-**Commands**
-- Commands are following the same structure for every option.
-- Correct:
-    > *Practice*
-    >
-    > *practice*
-    >
-    > *PraCtiCE*
-- Incorrect:
-    > *pra ctice*
-    >
-    > *md practice*
-
 <br>
 
 Back to [Table of Contents](#table-of-contents)
@@ -160,6 +119,7 @@ Back to [Table of Contents](#table-of-contents)
 > *I want to be able to quit the game.*
 
 ### **Returning user**
+Returning user stories are reserved and going to be implemented in next app version.
 
 > *I want to be able to register.*
 >
@@ -188,6 +148,7 @@ Back to [Table of Contents](#table-of-contents)
 
 The real-life application is moulded according to the created flowcharts. 
 The flowcharts depict the flow of the app but also allow for an insight into the logic behind.
+They do not depict the final product but are more of a pathway towards the end goal.
 
 ### **Flow of the app**
 Displays the flow of the app as a whole, from start until the point the app is exited.
@@ -248,7 +209,9 @@ Back to [Table of Contents](#table-of-contents)
 
 ## **Data Model**
 
-The [Google Sheet](https://www.google.com/sheets/about/) is used as the Minesweeper app database. The database consists of three sheets, each represented by its unique ID.
+Though the database isn't included within the current version due to lack of time, the app is expected to grow and so the data model will remain within this document.
+
+The [Google Sheet](https://www.google.com/sheets/about/) will be used as the Minesweeper app database. The database consists of three sheets, each represented by its unique ID.
 
 ### **User data**
 User data stores the account and security information of the individual user.
@@ -296,10 +259,16 @@ Back to [Table of Contents](#table-of-contents)
 
 ### **Languages**
 - [Python](https://www.python.org)
+- [HTML](https://html.spec.whatwg.org/multipage) & [CSS](https://www.w3.org/Style/CSS/Overview.en.html) - Website touch-ups.
 
 ### **Languages**Python Libraries/Modules
 - [gspread](https://docs.gspread.org/en/latest) - API for Google Sheets.
 - [OAuthLib](https://oauthlib.readthedocs.io/en/latest) - Google authentication.
+- [os](https://docs.python.org/3/library/os.html?highlight=os#module-os) - Used to clear the screen and get terminal size.
+- [time](https://docs.python.org/3/library/time.html) - Used to measure time and to provide execution delay.
+- [art](https://pypi.org/project/art) - Used for ASCII art.
+- [random](https://docs.python.org/3/library/random.html?highlight=random#module-random) - Used for generating random numbers.
+- [colorama](https://pypi.org/project/colorama) - Used for colors.
 
 ### **Tools**
 - [VScode](https://code.visualstudio.com) - IDE.
@@ -308,7 +277,9 @@ Back to [Table of Contents](#table-of-contents)
 - [Heroku](https://heroku.com) - Cloud platform.
 - [Lucidchart](https://www.lucidchart.com) - Flowcharts.
 - [Google Sheets](https://www.google.com/sheets/about) - Database.
-- [CI template](https://github.com/Code-Institute-Org/python-essentials-template) - Code Institute template (altered).
+- [CI template](https://github.com/Code-Institute-Org/python-essentials-template) - Code Institute 
+template (altered).
+- [Multi Mockup](https://techsini.com/multi-mockup/index.php) - Mockups.
 
 <br>
 
@@ -347,6 +318,8 @@ Back to [Table of Contents](#table-of-contents)
 
 
 ## **Credits**
+
+I would like to thank Code Institute and my mentor Narender Singh for pushing me in the right direction.
 
 <br>
 
