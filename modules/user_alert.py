@@ -188,7 +188,23 @@ class ContinueAlert(Alert):
                                "\n\033[36;1mWell..",
                                "..this is a place to be!\033[0m",
                                "\n\033[37;2mDive in textual gaming" +
-                               " with \033[0m\033[36;1mMINESWEEPER!\033[0m"]
+                               " with \033[0m\033[36;1mMINESWEEPER!\033[0m"],
+            "info screen": ["\033[36;1mMS objective is to flag all mines" +
+                            " in the shortest amount of time.\033[0m",
+                            "\033[37;2mGame fields have three different" +
+                            " states: hidden, displayed and flagged.\033[0m",
+                            "\n\033[36;1mHIDDEN\033[0m \033[37;2m= initial" +
+                            " state of the field.\033[0m",
+                            "\033[36;1mDISPLAYED\033[0m \033[37;2m=" +
+                            " indicator of nearby mines",
+                            "\tCommand:\033[0m \033[32;1mrow col | 2 3\033[0m",
+                            "\033[36;1mFLAGGED\033[0m \033[37;2m= " +
+                            "indicator of potentional mine!\033[0m" +
+                            " \033[33;1m=*To unflag a field, repeat the" +
+                            " flag command.\033[0m",
+                            "\t\033[37;2mCommand:\033[0m \033[32;1mflag" +
+                            " row col | flag 2 3\033[0m",
+                            "\n\033[36;1mHappy hunting!\033[0m"]
             }
 
         return self.alerts[alert]

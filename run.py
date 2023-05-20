@@ -10,10 +10,15 @@ def main():
     Starts the program.
     """
     os.system("clear")
-
-    tprint(" "*3 + "MINESWEEPER", font="avatar")
+    header = " "*3 + "MINESWEEPER"
+    tprint(header, font="avatar")
 
     ContinueAlert().call_alert("welcome screen")
+    os.system("clear")
+    header = " "*3 + "MINESWEEPER"
+    tprint(header, font="avatar")
+
+    ContinueAlert().call_alert("info screen")
 
     game = Minesweeper(10, 10, 4)
     game.run()
