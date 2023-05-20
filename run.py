@@ -48,6 +48,7 @@ def main():
 
         if not play_again:
             break
+    exit()
 
 
 if __name__ == "__main__":
